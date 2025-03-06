@@ -1,2 +1,7 @@
-# fis_2025_g6
-fis_2025_g6
+# Adóptame
+
+## Miembros
+- Jorge Esteban Gómez Zuluaga
+- Gerardo Elián Martínez Ramírez
+- André Sebastian Landinez Forero
+- Sara Rodríguez Urueña
