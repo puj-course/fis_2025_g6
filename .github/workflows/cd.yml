@@ -1,23 +1,33 @@
-name: Deploy
+name: CD - Deploy a GitHub Releases
 
 on:
-  push:
+  workflow_run:
+    workflows: ["CI - Build y Pruebas"]
+    types:
+      - completed
     branches:
-      - main
+      - grupo6
+      - Develop
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up JDK
-        uses: actions/setup-java@v3
+      - name: Descargar artefacto JAR desde CI
+        uses: actions/download-artifact@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          name: app-jar
+          path: target/
 
-      - name: Build with Maven
-        run: mvn clean package
+      - name: Crear Release y subir JAR
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: "Lanzamiento v1.0.${{ github.run_number }}"
+          body: "Nueva versión automática del proyecto"
+          draft: false
+          prerelease: false
+          files: target/*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
