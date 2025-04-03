@@ -1,27 +1,37 @@
-name: Build and Test
+name: CI - Build - Test 
 
 on:
   push:
     branches:
-      - main
+      - grupo6
   pull_request:
+    branches:
+      - grupo6
+      - Develop
 
 jobs:
-  build:
+  test_and_build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout del código fuente
         uses: actions/checkout@v3
 
-      - name: Set up JDK
+      - name: Configurar JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Build with Maven
+      - name: Ejecutar pruebas
+        run: mvn test
+        
+      - name:  Construcción del proyecto
         run: mvn clean package
 
-      - name: Run tests
-        run: mvn test
+      - name: Subir artefacto JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-jar
+          path: target/*.jar
+
