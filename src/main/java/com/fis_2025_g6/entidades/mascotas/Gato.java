@@ -1,5 +1,5 @@
 package com.fis_2025_g6.entidades.mascotas;
-
+// revision monitor
 import java.util.Date;
 
 public class Gato extends Mascota {
