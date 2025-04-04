@@ -3,10 +3,10 @@ name: CI/CD + Pruebas ✅
 on:
   push:
     branches:
-      - Develop
+      - develop
   pull_request:
     branches:
-      - Develop
+      - develop
 
 jobs:
   test_and_build:
