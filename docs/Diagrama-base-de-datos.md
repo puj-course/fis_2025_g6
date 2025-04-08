@@ -1,4 +1,4 @@
-![alt text](image.png)
+![Diagrama base de datos](diagramas/diagrama-bd.png)
 
 Este modelo entidad-relación fue diseñado con el objetivo de representar de forma estructurada y coherente los datos necesarios para la gestión de un sistema de adopción de mascotas. La base de datos busca garantizar integridad referencial, claridad en las relaciones entre entidades, y una escalabilidad que permita futuras ampliaciones del sistema sin comprometer la consistencia de los datos.
 
