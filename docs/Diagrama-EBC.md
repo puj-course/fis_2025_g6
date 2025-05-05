@@ -1,7 +1,7 @@
 Diagrama de Análisis basado en el modelo Entidad–Borde–Control (EBC)
 
 
-![Diagrama analisis](diagramas/Diagrama-EBC.png)
+![Diagrama analisis](../diagramas/Diagrama-EBC.png)
 
 Este patrón arquitectónico tiene como objetivo principal promover una clara separación de responsabilidades, facilitando así la mantenibilidad, escalabilidad y claridad del sistema.
 
