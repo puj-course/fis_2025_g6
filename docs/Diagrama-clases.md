@@ -107,7 +107,7 @@ Descripción: El administrador tiene control sobre todos los elementos del siste
 
 5. Mascota
 
-Representa a una mascota que puede ser adoptada.
+Representa a una mascota que puede ser adoptada
 
 Atributos:
 
