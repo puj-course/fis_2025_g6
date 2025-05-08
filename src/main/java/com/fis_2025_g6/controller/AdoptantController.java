@@ -37,7 +37,7 @@ public class AdoptantController {
     @PostMapping
     public ResponseEntity<Adoptant> create(@RequestBody AdoptantDto dto) {
         Adoptant adoptant = (Adoptant)adoptantFactory.create(
-            dto.getName(),
+            dto.getUsername(),
             dto.getEmail(),
             dto.getPassword(),
             dto.getPhoneNumber(),

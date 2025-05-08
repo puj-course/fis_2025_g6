@@ -11,10 +11,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import com.fis_2025_g6.auth.AuthRequest;
 import com.fis_2025_g6.auth.AuthResponse;
 import com.fis_2025_g6.auth.JwtUtil;
-import com.fis_2025_g6.auth.RegisterRequest;
+import com.fis_2025_g6.dto.AuthRequest;
+import com.fis_2025_g6.dto.RegisterRequest;
 import com.fis_2025_g6.entity.User;
 import com.fis_2025_g6.factory.AdoptantFactory;
 import com.fis_2025_g6.factory.RefugeFactory;
@@ -44,9 +44,9 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
         Authentication auth = authManager.authenticate(
-            new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-
-        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+        );
+        UserDetails userDetails = (UserDetails)auth.getPrincipal();
         String token = jwtUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthResponse(token));
     }
@@ -56,13 +56,16 @@ public class AuthController {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             return ResponseEntity.badRequest().body("El correo ya está registrado.");
         }
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
+            return ResponseEntity.badRequest().body("El usuario ya está registrado.");
+        }
 
         User newUser;
 
         switch (request.getType().toUpperCase()) {
             case "ADOPTANTE":
                 newUser = adoptantFactory.create(
-                    request.getName(),
+                    request.getUsername(),
                     request.getEmail(),
                     passwordEncoder.encode(request.getPassword()),
                     request.getPhoneNumber(),
@@ -71,7 +74,7 @@ public class AuthController {
                 break;
             case "REFUGIO":
                 newUser = refugeFactory.create(
-                    request.getName(),
+                    request.getUsername(),
                     request.getEmail(),
                     passwordEncoder.encode(request.getPassword()),
                     request.getPhoneNumber(),

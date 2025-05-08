@@ -1,12 +1,10 @@
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\Adoptame.java
-C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\AdoptionState.java
-C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\ApplicationState.java
-C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\auth\AuthRequest.java
+C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\AdoptionStatus.java
+C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\ApplicationStatus.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\auth\AuthResponse.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\auth\CustomUserDetails.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\auth\JwtAuthFilter.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\auth\JwtUtil.java
-C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\auth\RegisterRequest.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\auth\SecurityConfig.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\controller\AdoptantController.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\controller\ApplicationController.java
@@ -17,7 +15,9 @@ C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\control
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\controller\RefugeController.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\controller\UserController.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\dto\AdoptantDto.java
+C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\dto\AuthRequest.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\dto\RefugeDto.java
+C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\dto\RegisterRequest.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\dto\UserDto.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\entity\Adoptant.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\entity\Application.java

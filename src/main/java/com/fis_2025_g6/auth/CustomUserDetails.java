@@ -12,8 +12,8 @@ import com.fis_2025_g6.entity.User;
 public class CustomUserDetails implements UserDetails {
     private final User user;
 
-    public CustomUserDetails(User usuario) {
-        this.user = usuario;
+    public CustomUserDetails(User user) {
+        this.user = user;
     }
 
     @Override
@@ -22,13 +22,13 @@ public class CustomUserDetails implements UserDetails {
     }
 
     @Override
-    public String getPassword() {
-        return user.getPassword();
+    public String getUsername() {
+        return user.getUsername();
     }
 
     @Override
-    public String getUsername() {
-        return user.getEmail();
+    public String getPassword() {
+        return user.getPassword();
     }
 
     @Override

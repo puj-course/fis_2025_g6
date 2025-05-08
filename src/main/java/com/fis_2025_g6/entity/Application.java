@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.sql.Date;
 
-import com.fis_2025_g6.ApplicationState;
+import com.fis_2025_g6.ApplicationStatus;
 
 @Entity
 @Table(name = "solicitud")
@@ -23,7 +23,7 @@ public class Application {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "solic_estado", nullable = false)
-    private ApplicationState state;
+    private ApplicationStatus status;
 
     @ManyToOne
     @JoinColumn(name = "adopt_id", nullable = false)
