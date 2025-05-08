@@ -6,7 +6,7 @@ import lombok.*;
 import java.sql.Date;
 import java.util.Set;
 
-import com.fis_2025_g6.AdoptionState;
+import com.fis_2025_g6.AdoptionStatus;
 
 @Entity
 @Table(name = "mascota")
@@ -39,7 +39,7 @@ public class Pet {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "masc_estado", nullable = false)
-    private AdoptionState state = AdoptionState.AVAILABLE;
+    private AdoptionStatus status = AdoptionStatus.AVAILABLE;
 
     @ManyToOne
     @JoinColumn(name = "refg_id", nullable = false)
