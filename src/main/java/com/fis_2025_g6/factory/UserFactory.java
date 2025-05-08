@@ -6,10 +6,10 @@ import com.fis_2025_g6.entity.User;
 
 @Component
 public abstract class UserFactory {
-    public User create(String name, String email, String password, String phoneNumber, String address) {
-        User user = createUser(name, email, password, phoneNumber, address);
+    public User create(String username, String email, String password, String phoneNumber, String address) {
+        User user = createUser(username, email, password, phoneNumber, address);
         return user;
     }
 
-    protected abstract User createUser(String name, String email, String password, String phoneNumber, String address);
+    protected abstract User createUser(String username, String email, String password, String phoneNumber, String address);
 }

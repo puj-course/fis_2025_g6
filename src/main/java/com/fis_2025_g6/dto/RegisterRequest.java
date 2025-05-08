@@ -1,19 +1,19 @@
-package com.fis_2025_g6.auth;
+package com.fis_2025_g6.dto;
 
 public class RegisterRequest {
-    private String name;
+    private String username;
     private String password;
     private String email;
     private String phoneNumber;
     private String address;
     private String type;
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String val) {
-        name = val;
+    public void setUsername(String val) {
+        username = val;
     }
 
     public String getPassword() {

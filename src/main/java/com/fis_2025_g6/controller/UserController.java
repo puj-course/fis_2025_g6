@@ -39,7 +39,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> create(@RequestBody UserDto dto) {
         User user = userFactory.create(
-            dto.getName(),
+            dto.getUsername(),
             dto.getEmail(),
             dto.getPassword(),
             dto.getPhoneNumber(),

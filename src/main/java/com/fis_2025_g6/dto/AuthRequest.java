@@ -1,9 +1,8 @@
-package com.fis_2025_g6.auth;
+package com.fis_2025_g6.dto;
 
 public class AuthRequest {
     private String username;
     private String password;
-    private String email;
     private String type;
 
     public String getUsername() {
@@ -20,14 +19,6 @@ public class AuthRequest {
 
     public void setPassword(String val) {
         password = val;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String val) {
-        email = val;
     }
 
     public String getType() {

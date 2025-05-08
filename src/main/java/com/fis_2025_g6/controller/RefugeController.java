@@ -37,7 +37,7 @@ public class RefugeController {
     @PostMapping
     public ResponseEntity<Refuge> create(@RequestBody RefugeDto dto) {
         Refuge refuge = (Refuge)refugeFactory.create(
-            dto.getName(),
+            dto.getUsername(),
             dto.getEmail(),
             dto.getPassword(),
             dto.getPhoneNumber(),
