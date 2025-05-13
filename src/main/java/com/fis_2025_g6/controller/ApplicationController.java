@@ -4,10 +4,13 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.fis_2025_g6.entity.Application;
 import com.fis_2025_g6.service.ApplicationService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/solicitudes")
@@ -31,11 +34,12 @@ public class ApplicationController {
     }
 
     @PostMapping
-    public ResponseEntity<Application> create(@RequestBody Application application) {
+    public ResponseEntity<Application> create(@RequestBody @Valid Application application) {
         Application created = applicationService.create(application);
         return ResponseEntity.created(URI.create("/solicitudes/" + created.getId())).body(created);
     }
 
+    @PreAuthorize("hasRole('REFUGIO') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         boolean deleted = applicationService.delete(id);

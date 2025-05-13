@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import com.fis_2025_g6.entity.Form;
 import com.fis_2025_g6.service.FormService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/formularios")
 public class FormController {
@@ -31,7 +33,7 @@ public class FormController {
     }
 
     @PostMapping
-    public ResponseEntity<Form> create(@RequestBody Form form) {
+    public ResponseEntity<Form> create(@RequestBody @Valid Form form) {
         Form created = formService.create(form);
         return ResponseEntity.created(URI.create("/formularios/" + created.getId())).body(created);
     }

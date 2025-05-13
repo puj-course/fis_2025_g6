@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:15
+    container_name: adoptame-db
+    environment:
+      POSTGRES_DB: adoptame
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 071104
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: adoptame-app
+    depends_on:
+      - db
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/adoptame
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 071104
+    ports:
+      - "8080:8080"
+    restart: on-failure
+
+volumes:
+  postgres_data:

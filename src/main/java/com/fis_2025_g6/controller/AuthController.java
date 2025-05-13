@@ -16,6 +16,7 @@ import com.fis_2025_g6.auth.JwtUtil;
 import com.fis_2025_g6.dto.AuthRequest;
 import com.fis_2025_g6.dto.RegisterRequest;
 import com.fis_2025_g6.entity.User;
+import com.fis_2025_g6.factory.AdministratorFactory;
 import com.fis_2025_g6.factory.AdoptantFactory;
 import com.fis_2025_g6.factory.RefugeFactory;
 import com.fis_2025_g6.repository.UserRepository;
@@ -40,6 +41,9 @@ public class AuthController {
 
     @Autowired
     private RefugeFactory refugeFactory;
+
+    @Autowired
+    private AdministratorFactory administratorFactory;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
@@ -74,6 +78,15 @@ public class AuthController {
                 break;
             case "REFUGIO":
                 newUser = refugeFactory.create(
+                    request.getUsername(),
+                    request.getEmail(),
+                    passwordEncoder.encode(request.getPassword()),
+                    request.getPhoneNumber(),
+                    request.getAddress()
+                );
+                break;
+            case "ADMIN":
+                newUser = administratorFactory.create(
                     request.getUsername(),
                     request.getEmail(),
                     passwordEncoder.encode(request.getPassword()),
