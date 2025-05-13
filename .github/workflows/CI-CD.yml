@@ -12,6 +12,21 @@ jobs:
   test_and_build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 071104
+          POSTGRES_DB: adoptame
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: 🔄 Checkout del código fuente
         uses: actions/checkout@v3
