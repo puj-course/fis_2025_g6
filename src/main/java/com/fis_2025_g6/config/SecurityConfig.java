@@ -1,5 +1,6 @@
-package com.fis_2025_g6.auth;
+package com.fis_2025_g6.config;
 
+import com.fis_2025_g6.auth.JwtAuthFilter;
 import com.fis_2025_g6.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

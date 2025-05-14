@@ -5,7 +5,8 @@ C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\auth\Au
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\auth\CustomUserDetails.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\auth\JwtAuthFilter.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\auth\JwtUtil.java
-C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\auth\SecurityConfig.java
+C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\config\SecurityConfig.java
+C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\config\TwilioConfig.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\controller\AdministratorController.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\controller\AdoptantController.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\controller\ApplicationController.java
@@ -14,6 +15,7 @@ C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\control
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\controller\FormController.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\controller\PetController.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\controller\RefugeController.java
+C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\controller\SMSController.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\controller\UserController.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\dto\AdministratorDto.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\dto\AdoptantDto.java
@@ -49,4 +51,5 @@ C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\service
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\service\FormService.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\service\PetService.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\service\RefugeService.java
+C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\service\SMSService.java
 C:\Users\Eliqn\Proyectos\ingsw\fis_2025_g6\src\main\java\com\fis_2025_g6\service\UserService.java
