@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.fis_2025_g6.controller.MainScreenController"
+      spacing="10" alignment="CENTER">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <Button text="Registro de Usuario" onAction="#abrirRegistroUsuario"/>
+    <Button text="Contacto con Refugios" onAction="#abrirContactoRefugios"/>
+    <Button text="Contactar desarrolladores" onAction="#abrirContactoDesarrolladores"/>
+</VBox>
+

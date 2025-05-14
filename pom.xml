@@ -98,6 +98,24 @@
       <version>3.0.0</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.twilio.sdk</groupId>
+      <artifactId>twilio</artifactId>
+      <version>9.9.0</version>
+    </dependency>
+
+    <!-- JavaFX Modules -->
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>17.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>17.0.6</version>
+    </dependency>
+
     <!-- Pruebas -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -138,9 +156,34 @@
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
           <configuration>
-            <mainClass>com.fis_2025_g6.Adoptame</mainClass>
+            <mainClass>com.fis_2025_g6.Prueba</mainClass>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <executions>
+          <execution>
+            <!-- Default configuration for running with: mvn clean javafx:run -->
+            <id>default-cli</id>
+            <configuration>
+              <mainClass>com.fis_2025_g6.Prueba</mainClass>
+              <launcher>app</launcher>
+              <jlinkZipName>app</jlinkZipName>
+              <jlinkImageName>app</jlinkImageName>
+              <noManPages>true</noManPages>
+              <stripDebug>true</stripDebug>
+              <noHeaderFiles>true</noHeaderFiles>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
     </pluginManagement>
