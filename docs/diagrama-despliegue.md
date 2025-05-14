@@ -1,4 +1,5 @@
 Diagrama de despliegue
+
 ![Diagrama de Despliegue](../diagramas/diagrama-despliegue.png)
 
 1. Cliente (Java App)
