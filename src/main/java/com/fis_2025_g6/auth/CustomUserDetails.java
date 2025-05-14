@@ -63,4 +63,20 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public boolean isAdoptant() {
+        return user instanceof Adoptant;
+    }
+
+    public boolean isRefuge() {
+        return user instanceof Refuge;
+    }
+
+    public boolean isAdministrator() {
+        return user instanceof Administrator;
+    }
 }
