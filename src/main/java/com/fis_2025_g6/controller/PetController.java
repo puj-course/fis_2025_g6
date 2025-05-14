@@ -34,7 +34,7 @@ public class PetController {
         return petService.findAll();
     }
 
-    @GetMapping("/filter")
+    @GetMapping("/filtro")
     public List<Pet> filter(
         @RequestParam(required = false) String species,
         @RequestParam(required = false) Integer age,
