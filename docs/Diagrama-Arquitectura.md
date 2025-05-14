@@ -1,4 +1,5 @@
 Diagrama de arquitectura
+
 ![Diagrama Arquitectura](../diagramas/diagrama-arquitectura.png)
 
 Este diagrama representa cómo se aplicó la arquitectura de MVC al sistema. Esta propuesta busca lograr una aplicación robusta y flexible a cambios y modificaciones. Las capas del modelo, que son Service, Repository, DTO y Factory, promueven una alta cohesión dentro de cada componente y un bajo acoplamiento entre ellos, lo cual facilita el mantenimiento, testing y crecimiento del sistema a largo plazo.
