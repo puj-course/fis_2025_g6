@@ -89,7 +89,7 @@
       <version>3.0.0</version>
     </dependency>
 
-    <!-- Twilio (se queda solo una versión, la más nueva) -->
+    <!-- Twilio -->
     <dependency>
       <groupId>com.twilio.sdk</groupId>
       <artifactId>twilio</artifactId>
@@ -169,7 +169,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-          <mainClass>com.fis_2025_g6.Adoptame</mainClass> <!-- Usa la clase principal final -->
+          <mainClass>com.fis_2025_g6.Adoptame</mainClass>
         </configuration>
       </plugin>
 
