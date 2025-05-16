@@ -4,8 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
-import java.util.Set;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fis_2025_g6.AdoptionStatus;
 
 @Entity
@@ -46,5 +47,6 @@ public class Pet {
     private Refuge refuge;
 
     @OneToMany(mappedBy = "pet")
-    private Set<Application> applications;
+    @JsonIgnore
+    private List<Application> applications;
 }

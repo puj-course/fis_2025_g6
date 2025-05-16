@@ -24,6 +24,10 @@ public class DonationService {
         return donationRepository.findById(id);
     }
 
+    public List<Donation> findByAdoptantId(Long adoptantId) {
+        return donationRepository.findByAdoptantId(adoptantId);
+    }
+
     public Donation create(Donation donation) {
         return donationRepository.save(donation);
     }

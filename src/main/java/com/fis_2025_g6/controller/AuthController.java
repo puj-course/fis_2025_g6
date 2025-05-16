@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.fis_2025_g6.auth.AuthResponse;
@@ -16,6 +17,7 @@ import com.fis_2025_g6.auth.JwtUtil;
 import com.fis_2025_g6.dto.AuthRequest;
 import com.fis_2025_g6.dto.RegisterRequest;
 import com.fis_2025_g6.entity.User;
+import com.fis_2025_g6.factory.AdministratorFactory;
 import com.fis_2025_g6.factory.AdoptantFactory;
 import com.fis_2025_g6.factory.RefugeFactory;
 import com.fis_2025_g6.repository.UserRepository;
@@ -41,7 +43,10 @@ public class AuthController {
     @Autowired
     private RefugeFactory refugeFactory;
 
-    @PostMapping("/login")
+    @Autowired
+    private AdministratorFactory administratorFactory;
+
+    @PostMapping("/iniciosesion")
     public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
         Authentication auth = authManager.authenticate(
             new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
@@ -51,17 +56,19 @@ public class AuthController {
         return ResponseEntity.ok(new AuthResponse(token));
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request) {
+    @PostMapping("/registro")
+    public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request, BindingResult result) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            return ResponseEntity.badRequest().body("El correo ya está registrado.");
+            return ResponseEntity.badRequest().body("El correo ya está registrado");
         }
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
-            return ResponseEntity.badRequest().body("El usuario ya está registrado.");
+            return ResponseEntity.badRequest().body("El usuario ya está registrado");
+        }
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
         User newUser;
-
         switch (request.getType().toUpperCase()) {
             case "ADOPTANTE":
                 newUser = adoptantFactory.create(
@@ -81,11 +88,20 @@ public class AuthController {
                     request.getAddress()
                 );
                 break;
+            case "ADMIN":
+                newUser = administratorFactory.create(
+                    request.getUsername(),
+                    request.getEmail(),
+                    passwordEncoder.encode(request.getPassword()),
+                    request.getPhoneNumber(),
+                    request.getAddress()
+                );
+                break;
             default:
-                return ResponseEntity.badRequest().body("Tipo de usuario inválido.");
+                return ResponseEntity.badRequest().body("Tipo de usuario inválido");
         }
 
         userRepository.save(newUser);
-        return ResponseEntity.ok("Usuario registrado con éxito.");
+        return ResponseEntity.ok("Usuario registrado con éxito");
     }
 }

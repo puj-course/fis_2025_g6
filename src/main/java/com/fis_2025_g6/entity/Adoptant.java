@@ -2,6 +2,8 @@ package com.fis_2025_g6.entity;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,8 +19,10 @@ public class Adoptant extends User {
     private String adoptantName;
 
     @OneToMany(mappedBy = "adoptant")
+    @JsonIgnore
     private Set<Donation> donations;
 
     @OneToMany(mappedBy = "adoptant")
+    @JsonIgnore
     private Set<Application> applications;
 }
