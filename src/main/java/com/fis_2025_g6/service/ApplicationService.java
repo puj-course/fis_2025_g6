@@ -25,6 +25,10 @@ public class ApplicationService {
         return applicationRepository.findById(id);
     }
 
+    public List<Application> findByAdoptantId(Long adoptantId) {
+        return applicationRepository.findByAdoptantId(adoptantId);
+    }
+
     public Application create(Application application) {
         return applicationRepository.save(application);
     }

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
-import java.util.Set;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fis_2025_g6.AdoptionStatus;
@@ -48,5 +48,5 @@ public class Pet {
 
     @OneToMany(mappedBy = "pet")
     @JsonIgnore
-    private Set<Application> applications;
+    private List<Application> applications;
 }

@@ -37,6 +37,14 @@ public class RefugeController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
+    @GetMapping("/{id}/mascotas")
+    public ResponseEntity<?> findPetsByRefuge(@PathVariable Long id) {
+        return refugeService.findById(id)
+            .map(refuge -> ResponseEntity.ok(refuge.getPets()))
+            .orElse(ResponseEntity.notFound().build());
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Refuge> create(@RequestBody @Valid RefugeDto dto) {

@@ -34,6 +34,13 @@ public class PetController {
         return petService.findAll();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Pet> findById(@PathVariable Long id) {
+        return petService.findById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/filtro")
     public List<Pet> filter(
         @RequestParam(required = false) String species,
@@ -44,10 +51,11 @@ public class PetController {
         return petService.filter(species, age, sex, status);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Pet> findById(@PathVariable Long id) {
+    @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
+    @GetMapping("/{id}/solicitudes")
+    public ResponseEntity<?> findApplicationsByPet(@PathVariable Long id) {
         return petService.findById(id)
-            .map(ResponseEntity::ok)
+            .map(pet -> ResponseEntity.ok(pet.getApplications()))
             .orElse(ResponseEntity.notFound().build());
     }
 

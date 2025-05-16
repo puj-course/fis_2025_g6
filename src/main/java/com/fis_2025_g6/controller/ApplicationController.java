@@ -57,7 +57,8 @@ public class ApplicationController {
         if (!(user instanceof Adoptant)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Solo un adoptante puede hacer solicitudes");
         }
-        Pet pet = petService.findById(dto.getPetId()).get(); // TODO
+        Pet pet = petService.findById(dto.getPetId())
+            .orElseThrow(() -> new IllegalArgumentException("Mascota no encontrada"));
 
         Application application = new Application();
         application.setDate(new Date(System.currentTimeMillis()));
@@ -70,7 +71,7 @@ public class ApplicationController {
     }
 
     @PreAuthorize("hasRole('ADOPTANT') or hasRole('REFUGE') or hasRole('ADMIN')")
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Application> updateStatus(@PathVariable Long id, @RequestBody UpdateApplicationStatusDto dto) {
         try {
             Application updated = applicationService.updateStatus(id, dto.getStatus());
