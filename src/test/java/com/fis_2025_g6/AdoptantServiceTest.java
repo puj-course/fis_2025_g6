@@ -72,5 +72,4 @@ public class AdoptantServiceTest {
         assertNotNull(result);
         assertEquals("", result.getUsername(), "Debe permitir guardar un nombre vacío si no hay validación activa");
     }
-    
 }

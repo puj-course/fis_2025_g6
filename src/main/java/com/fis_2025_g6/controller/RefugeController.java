@@ -4,12 +4,15 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.fis_2025_g6.dto.RefugeDto;
 import com.fis_2025_g6.entity.Refuge;
 import com.fis_2025_g6.factory.RefugeFactory;
 import com.fis_2025_g6.service.RefugeService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/refugios")
@@ -34,8 +37,9 @@ public class RefugeController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<Refuge> create(@RequestBody RefugeDto dto) {
+    public ResponseEntity<Refuge> create(@RequestBody @Valid RefugeDto dto) {
         Refuge refuge = (Refuge)refugeFactory.create(
             dto.getUsername(),
             dto.getEmail(),
@@ -47,6 +51,7 @@ public class RefugeController {
         return ResponseEntity.created(URI.create("/refugios/" + created.getId())).body(created);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         boolean deleted = refugeService.delete(id);

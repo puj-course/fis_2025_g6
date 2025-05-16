@@ -7,6 +7,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fis_2025_g6.entity.Administrator;
+import com.fis_2025_g6.entity.Adoptant;
+import com.fis_2025_g6.entity.Refuge;
 import com.fis_2025_g6.entity.User;
 
 public class CustomUserDetails implements UserDetails {
@@ -18,7 +21,17 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        String role;
+        if (user instanceof Adoptant) {
+            role = "ROLE_ADOPTANT";
+        } else if (user instanceof Refuge) {
+            role = "ROLE_REFUGE";
+        } else if (user instanceof Administrator) {
+            role = "ROLE_ADMIN";
+        } else {
+            role = "ROLE_USER";
+        }
+        return List.of(new SimpleGrantedAuthority(role));
     }
 
     @Override
@@ -49,5 +62,21 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public boolean isAdoptant() {
+        return user instanceof Adoptant;
+    }
+
+    public boolean isRefuge() {
+        return user instanceof Refuge;
+    }
+
+    public boolean isAdministrator() {
+        return user instanceof Administrator;
     }
 }

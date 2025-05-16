@@ -4,12 +4,15 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.fis_2025_g6.dto.AdoptantDto;
 import com.fis_2025_g6.entity.Adoptant;
 import com.fis_2025_g6.factory.AdoptantFactory;
 import com.fis_2025_g6.service.AdoptantService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/adoptantes")
@@ -34,8 +37,9 @@ public class AdoptantController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<Adoptant> create(@RequestBody AdoptantDto dto) {
+    public ResponseEntity<Adoptant> create(@RequestBody @Valid AdoptantDto dto) {
         Adoptant adoptant = (Adoptant)adoptantFactory.create(
             dto.getUsername(),
             dto.getEmail(),
@@ -47,6 +51,7 @@ public class AdoptantController {
         return ResponseEntity.created(URI.create("/adoptantes/" + created.getId())).body(created);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         boolean deleted = adoptantService.delete(id);

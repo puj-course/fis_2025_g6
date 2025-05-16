@@ -1,0 +1,62 @@
+package com.fis_2025_g6.controller;
+
+import java.net.URI;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import com.fis_2025_g6.dto.AdministratorDto;
+import com.fis_2025_g6.entity.Administrator;
+import com.fis_2025_g6.factory.AdministratorFactory;
+import com.fis_2025_g6.service.AdministratorService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/admins")
+public class AdministratorController {
+    private final AdministratorService administratorService;
+    private final AdministratorFactory administratorFactory;
+
+    public AdministratorController(AdministratorService adoptantService, AdministratorFactory adoptantFactory) {
+        this.administratorService = adoptantService;
+        this.administratorFactory = adoptantFactory;
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping
+    public List<Administrator> findAll() {
+        return administratorService.findAll();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/{id}")
+    public ResponseEntity<Administrator> findById(@PathVariable Long id) {
+        return administratorService.findById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping
+    public ResponseEntity<Administrator> create(@RequestBody @Valid AdministratorDto dto) {
+        Administrator administrator = (Administrator)administratorFactory.create(
+            dto.getUsername(),
+            dto.getEmail(),
+            dto.getPassword(),
+            dto.getPhoneNumber(),
+            dto.getAddress()
+        );
+        Administrator created = administratorService.create(administrator);
+        return ResponseEntity.created(URI.create("/adoptantes/" + created.getId())).body(created);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        boolean deleted = administratorService.delete(id);
+        return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    }
+}

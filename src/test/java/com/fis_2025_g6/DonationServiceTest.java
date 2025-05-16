@@ -50,5 +50,4 @@ public class DonationServiceTest {
         assertTrue(deleted);
         verify(donationRepository).deleteById(donationId);
     }
-
 }

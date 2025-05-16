@@ -24,6 +24,10 @@ public class RefugeService {
         return refugeRepository.findById(id);
     }
 
+    public Optional<Refuge> findByUsername(String userame) {
+        return refugeRepository.findByUsername(userame);
+    }
+
     public Refuge create(Refuge refuge) {
         return refugeRepository.save(refuge);
     }

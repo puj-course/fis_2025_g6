@@ -1,5 +1,6 @@
 package com.fis_2025_g6.service;
 
+import com.fis_2025_g6.ApplicationStatus;
 import com.fis_2025_g6.entity.Application;
 import com.fis_2025_g6.repository.ApplicationRepository;
 
@@ -34,5 +35,38 @@ public class ApplicationService {
             applicationRepository.deleteById(id);
         }
         return exists;
+    }
+
+    public Application approve(Long id) {
+        Application application = applicationRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Solicitud no encontrada"));
+        application.approve();
+        return applicationRepository.save(application);
+    }
+
+    public Application reject(Long id) {
+        Application application = applicationRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Solicitud no encontrada"));
+        application.reject();
+        return applicationRepository.save(application);
+    }
+
+    public Application cancel(Long id) {
+        Application application = applicationRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Solicitud no encontrada"));
+        application.cancel();
+        return applicationRepository.save(application);
+    }
+
+    public Application updateStatus(Long id, ApplicationStatus newStatus) {
+        Application application = applicationRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Solicitud no encontrada"));
+        switch (newStatus) {
+            case APPROVED -> application.approve();
+            case REJECTED -> application.reject();
+            case CANCELED -> application.cancel();
+            default -> throw new IllegalArgumentException("Estado no soportado o transición inválida");
+        }
+        return applicationRepository.save(application);
     }
 }

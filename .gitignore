@@ -1,3 +1,5 @@
 .env
 .vscode/
+target/
+src/main/resources/*.properties
 *.log

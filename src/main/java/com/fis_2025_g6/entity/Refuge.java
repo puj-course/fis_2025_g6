@@ -2,6 +2,8 @@ package com.fis_2025_g6.entity;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,8 +22,10 @@ public class Refuge extends User {
     private String description;
 
     @OneToMany(mappedBy = "refuge")
+    @JsonIgnore
     private Set<Pet> pets;
 
     @OneToMany(mappedBy = "refuge")
+    @JsonIgnore
     private Set<Donation> receivedDonations;
 }

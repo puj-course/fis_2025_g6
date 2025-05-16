@@ -6,6 +6,7 @@ import lombok.*;
 import java.sql.Date;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fis_2025_g6.AdoptionStatus;
 
 @Entity
@@ -46,5 +47,6 @@ public class Pet {
     private Refuge refuge;
 
     @OneToMany(mappedBy = "pet")
+    @JsonIgnore
     private Set<Application> applications;
 }
