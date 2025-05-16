@@ -21,6 +21,7 @@ import com.fis_2025_g6.entity.User;
 import com.fis_2025_g6.service.ApplicationService;
 import com.fis_2025_g6.service.PetService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
@@ -35,12 +36,14 @@ public class ApplicationController {
         this.petService = petService;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Obtener la lista de solicitudes", description = "Usuarios REFUGIO")
+    @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping
     public List<Application> findAll() {
         return applicationService.findAll();
     }
 
+    @Operation(summary = "Obtener una solicitud por su ID", description = "Usuarios ADOPTANTE o REFUGIO")
     @GetMapping("/{id}")
     public ResponseEntity<Application> findById(@PathVariable Long id) {
         return applicationService.findById(id)
@@ -48,6 +51,7 @@ public class ApplicationController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Crear una solicitud", description = "Usuarios ADOPTANTE")
     @PreAuthorize("hasRole('ADOPTANT') or hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> create(
@@ -71,6 +75,7 @@ public class ApplicationController {
         return ResponseEntity.created(URI.create("/solicitudes/" + created.getId())).body(created);
     }
 
+    @Operation(summary = "Eliminar una solicitud por su ID", description = "Usuarios ADOPTANTE o REFUGIO")
     @PreAuthorize("hasRole('ADOPTANT') or hasRole('REFUGE') or hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Application> updateStatus(@PathVariable Long id, @RequestBody UpdateApplicationStatusDto dto) {

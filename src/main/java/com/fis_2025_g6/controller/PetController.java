@@ -18,6 +18,7 @@ import com.fis_2025_g6.entity.Refuge;
 import com.fis_2025_g6.entity.User;
 import com.fis_2025_g6.service.PetService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
@@ -29,11 +30,13 @@ public class PetController {
         this.petService = petService;
     }
 
+    @Operation(summary = "Obtener la lista de mascotas", description = "Usuarios ADOPTANTE o REFUGIO")
     @GetMapping
     public List<Pet> findAll() {
         return petService.findAll();
     }
 
+    @Operation(summary = "Obtener una mascota por su ID", description = "Usuarios ADOPTANTE o REFUGIO")
     @GetMapping("/{id}")
     public ResponseEntity<Pet> findById(@PathVariable Long id) {
         return petService.findById(id)
@@ -41,6 +44,7 @@ public class PetController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Buscar una mascota por especie, edad, sexo o estado", description = "Usuarios ADOPTANTE o REFUGIO")
     @GetMapping("/filtro")
     public List<Pet> filter(
         @RequestParam(required = false) String species,
@@ -51,6 +55,7 @@ public class PetController {
         return petService.filter(species, age, sex, status);
     }
 
+    @Operation(summary = "Obtener la lista de solicitudes para una mascota", description = "Usuarios REFUGIO")
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping("/{id}/solicitudes")
     public ResponseEntity<?> findApplicationsByPet(@PathVariable Long id) {
@@ -59,6 +64,7 @@ public class PetController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Crear una mascota", description = "Usuarios REFUGIO")
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid PetDto dto, @AuthenticationPrincipal CustomUserDetails principal) {
@@ -80,6 +86,7 @@ public class PetController {
         return ResponseEntity.created(URI.create("/mascotas/" + created.getId())).body(created);
     }
 
+    @Operation(summary = "Eliminar una mascota por su ID", description = "Usuarios REFUGIO")
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

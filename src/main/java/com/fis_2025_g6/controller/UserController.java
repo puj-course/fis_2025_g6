@@ -13,6 +13,7 @@ import com.fis_2025_g6.entity.User;
 import com.fis_2025_g6.factory.UserFactory;
 import com.fis_2025_g6.service.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
@@ -26,12 +27,14 @@ public class UserController {
         this.userFactory = userFactory;
     }
 
+    @Operation(summary = "Obtener la lista de usuarios", description = "Usuarios REFUGIO")
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping
     public List<User> findAll() {
         return userService.findAll();
     }
 
+    @Operation(summary = "Obtener un usuario por su ID", description = "Usuarios REFUGIO")
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
@@ -40,6 +43,7 @@ public class UserController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Crear un usuario")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<User> create(@RequestBody @Valid UserDto dto) {
@@ -54,6 +58,7 @@ public class UserController {
         return ResponseEntity.created(URI.create("/usuarios/" + created.getId())).body(created);
     }
 
+    @Operation(summary = "Eliminar un usuario por su ID")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

@@ -16,6 +16,7 @@ import com.fis_2025_g6.service.AdoptantService;
 import com.fis_2025_g6.service.ApplicationService;
 import com.fis_2025_g6.service.DonationService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
@@ -38,12 +39,14 @@ public class AdoptantController {
         this.adoptantFactory = adoptantFactory;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Obtener la lista de adoptantes", description = "Usuarios REFUGIO")
+    @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping
     public List<Adoptant> findAll() {
         return adoptantService.findAll();
     }
 
+    @Operation(summary = "Obtener un adoptante por su ID", description = "Usuarios REFUGIO")
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<Adoptant> findById(@PathVariable Long id) {
@@ -52,6 +55,7 @@ public class AdoptantController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Obtener la lista de solicitudes de un adoptante", description = "Usuarios ADOPTANTE")
     @PreAuthorize("hasRole('ADOPTANT') or hasRole('ADMIN')")
     @GetMapping("/{id}/solicitudes")
     public ResponseEntity<?> getApplications(@PathVariable Long id) {
@@ -62,6 +66,7 @@ public class AdoptantController {
         return ResponseEntity.ok(applications);
     }
 
+    @Operation(summary = "Obtener la lista de donaciones de un adoptante", description = "Usuarios ADOPTANTE")
     @PreAuthorize("hasRole('ADOPTANT') or hasRole('ADMIN')")
     @GetMapping("/{id}/donaciones")
     public ResponseEntity<?> getDonations(@PathVariable Long id) {
@@ -72,6 +77,7 @@ public class AdoptantController {
         return ResponseEntity.ok(donations);
     }
 
+    @Operation(summary = "Crear un adoptante")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Adoptant> create(@RequestBody @Valid AdoptantDto dto) {
@@ -86,6 +92,7 @@ public class AdoptantController {
         return ResponseEntity.created(URI.create("/adoptantes/" + created.getId())).body(created);
     }
 
+    @Operation(summary = "Eliminar un adoptante por su ID")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

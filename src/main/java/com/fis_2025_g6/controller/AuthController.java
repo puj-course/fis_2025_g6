@@ -22,6 +22,8 @@ import com.fis_2025_g6.factory.AdoptantFactory;
 import com.fis_2025_g6.factory.RefugeFactory;
 import com.fis_2025_g6.repository.UserRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -46,6 +48,7 @@ public class AuthController {
     @Autowired
     private AdministratorFactory administratorFactory;
 
+    @Operation(summary = "Iniciar sesión con una cuenta", description = "Cualquier persona sin autenticar")
     @PostMapping("/iniciosesion")
     public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
         Authentication auth = authManager.authenticate(
@@ -56,6 +59,7 @@ public class AuthController {
         return ResponseEntity.ok(new AuthResponse(token));
     }
 
+    @Operation(summary = "Registrarse en el sistema", description = "Cualquier persona sin autenticar")
     @PostMapping("/registro")
     public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request, BindingResult result) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
