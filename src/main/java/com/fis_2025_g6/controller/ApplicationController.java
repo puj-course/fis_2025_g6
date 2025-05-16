@@ -35,6 +35,7 @@ public class ApplicationController {
         this.petService = petService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<Application> findAll() {
         return applicationService.findAll();
@@ -47,8 +48,8 @@ public class ApplicationController {
             .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
     @PreAuthorize("hasRole('ADOPTANT') or hasRole('ADMIN')")
+    @PostMapping
     public ResponseEntity<?> create(
         @RequestBody @Valid ApplicationDto dto,
         @AuthenticationPrincipal CustomUserDetails principal

@@ -26,13 +26,13 @@ public class UserController {
         this.userFactory = userFactory;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping
     public List<User> findAll() {
         return userService.findAll();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
         return userService.findById(id)

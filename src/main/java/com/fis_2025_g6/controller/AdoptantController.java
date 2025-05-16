@@ -33,11 +33,13 @@ public class AdoptantController {
         this.adoptantFactory = adoptantFactory;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<Adoptant> findAll() {
         return adoptantService.findAll();
     }
 
+    @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<Adoptant> findById(@PathVariable Long id) {
         return adoptantService.findById(id)
