@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import com.fis_2025_g6.dto.AdoptantDto;
 import com.fis_2025_g6.entity.Adoptant;
 import com.fis_2025_g6.entity.Application;
+import com.fis_2025_g6.entity.Donation;
 import com.fis_2025_g6.factory.AdoptantFactory;
 import com.fis_2025_g6.service.AdoptantService;
 import com.fis_2025_g6.service.ApplicationService;
+import com.fis_2025_g6.service.DonationService;
 
 import jakarta.validation.Valid;
 
@@ -21,15 +23,18 @@ import jakarta.validation.Valid;
 public class AdoptantController {
     private final AdoptantService adoptantService;
     private final ApplicationService applicationService;
+    private final DonationService donationService;
     private final AdoptantFactory adoptantFactory;
 
     public AdoptantController(
         AdoptantService adoptantService,
         ApplicationService applicationService,
+        DonationService donationService,
         AdoptantFactory adoptantFactory
     ) {
         this.adoptantService = adoptantService;
         this.applicationService = applicationService;
+        this.donationService = donationService;
         this.adoptantFactory = adoptantFactory;
     }
 
@@ -55,6 +60,16 @@ public class AdoptantController {
         }
         List<Application> applications = applicationService.findByAdoptantId(id);
         return ResponseEntity.ok(applications);
+    }
+
+    @PreAuthorize("hasRole('ADOPTANT') or hasRole('ADMIN')")
+    @GetMapping("/{id}/donaciones")
+    public ResponseEntity<?> getDonations(@PathVariable Long id) {
+        if (adoptantService.findById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        List<Donation> donations = donationService.findByAdoptantId(id);
+        return ResponseEntity.ok(donations);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
