@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fis_2025_g6.entity.User;
-import com.fis_2025_g6.service.SMSService;
+import com.fis_2025_g6.service.NotificationService;
 import com.fis_2025_g6.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,11 +19,11 @@ import io.swagger.v3.oas.annotations.Operation;
 @RestController
 @RequestMapping("/sms")
 public class SMSController {
-    private final SMSService smsService;
+    private final NotificationService notificationService;
     private final UserService userService;
 
-    public SMSController(SMSService smsService, UserService userService) {
-        this.smsService = smsService;
+    public SMSController(NotificationService notificationService, UserService userService) {
+        this.notificationService = notificationService;
         this.userService = userService;
     }
 
@@ -31,7 +31,7 @@ public class SMSController {
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @PostMapping("/envio")
     public ResponseEntity<String> sendSMS(@RequestParam String number, @RequestParam String message) {
-        smsService.sendSMS(number, message);
+        notificationService.send(message, number);
         return ResponseEntity.ok("SMS enviado a " + number);
     }
 
@@ -45,7 +45,7 @@ public class SMSController {
         }
 
         User destination = user.get();
-        smsService.sendSMS(destination.getPhoneNumber(), message);
-        return ResponseEntity.ok("SMS enviado a" + destination.getUsername());
+        notificationService.send(message, destination.getPhoneNumber());
+        return ResponseEntity.ok("SMS enviado a " + destination.getUsername());
     }
 }

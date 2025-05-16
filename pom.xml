@@ -96,6 +96,12 @@
       <version>10.8.0</version>
     </dependency>
 
+    <!-- Correo electrónico -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-mail</artifactId>
+    </dependency>
+
     <!-- JavaFX -->
     <dependency>
       <groupId>org.openjfx</groupId>
