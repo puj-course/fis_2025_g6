@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.fis_2025_g6.controller.DevelopersContactsController"
+      alignment="CENTER" spacing="10">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Contáctanos"/>
+    <TextField promptText="Tu correo electrónico"/>
+    <TextArea promptText="Describe tu problema aquí"/>
+    <Button text="Enviar"/>
+</VBox>
+

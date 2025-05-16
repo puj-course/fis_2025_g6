@@ -1,34 +1,27 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>3.4.4</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
+
   <groupId>com.fis_2025_g6</groupId>
   <artifactId>adoptame</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>adoptame</name>
   <url>https://github.com/puj-course/fis_2025_g6</url>
-  <licenses>
-    <license/>
-  </licenses>
-  <developers>
-    <developer/>
-  </developers>
-  <scm>
-    <connection/>
-    <developerConnection/>
-    <tag/>
-    <url/>
-  </scm>
+
   <properties>
     <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
   </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -40,7 +33,9 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
   <dependencies>
+    <!-- Spring Boot starters -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -53,16 +48,22 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
+
+    <!-- Base de datos -->
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <scope>runtime</scope>
     </dependency>
+
+    <!-- Lombok -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <optional>true</optional>
     </dependency>
+
+    <!-- JWT -->
     <dependency>
       <groupId>io.jsonwebtoken</groupId>
       <artifactId>jjwt-api</artifactId>
@@ -81,6 +82,56 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!-- Variables de entorno -->
+    <dependency>
+      <groupId>io.github.cdimascio</groupId>
+      <artifactId>dotenv-java</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+
+    <!-- Twilio -->
+    <dependency>
+      <groupId>com.twilio.sdk</groupId>
+      <artifactId>twilio</artifactId>
+      <version>10.8.0</version>
+    </dependency>
+
+    <!-- JavaFX -->
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>17.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>17.0.6</version>
+    </dependency>
+
+    <!-- OpenAPI -->
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+      <version>2.2.0</version>
+    </dependency>
+
+    <!-- Validaciones -->
+    <dependency>
+      <groupId>jakarta.validation</groupId>
+      <artifactId>jakarta.validation-api</artifactId>
+      <version>3.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate.validator</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>8.0.1.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>jakarta.el</artifactId>
+      <version>4.0.2</version>
+    </dependency>
+
     <!-- Pruebas -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -97,55 +148,56 @@
       <artifactId>junit-jupiter-params</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>jakarta.validation</groupId>
-      <artifactId>jakarta.validation-api</artifactId>
-      <version>3.0.2</version>
-    </dependency>
-    <dependency>
-      <groupId>com.twilio.sdk</groupId>
-      <artifactId>twilio</artifactId>
-      <version>10.8.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate.validator</groupId>
-      <artifactId>hibernate-validator</artifactId>
-      <version>8.0.1.Final</version>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish</groupId>
-      <artifactId>jakarta.el</artifactId>
-      <version>4.0.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-      <version>2.2.0</version>
-    </dependency>
   </dependencies>
+
   <build>
     <plugins>
       <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <configuration>
-            <annotationProcessorPaths>
-              <path>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-              </path>
-            </annotationProcessorPaths>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-          <configuration>
-            <mainClass>com.fis_2025_g6.Adoptame</mainClass>
-          </configuration>
-        </plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>com.fis_2025_g6.Adoptame</mainClass>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <executions>
+          <execution>
+            <id>default-cli</id>
+            <configuration>
+              <mainClass>com.fis_2025_g6.Adoptame</mainClass>
+              <launcher>app</launcher>
+              <jlinkZipName>app</jlinkZipName>
+              <jlinkImageName>app</jlinkImageName>
+              <noManPages>true</noManPages>
+              <stripDebug>true</stripDebug>
+              <noHeaderFiles>true</noHeaderFiles>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-    </pluginManagement>
   </build>
 </project>
