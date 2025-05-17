@@ -1,16 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Button?>
 
 <?import javafx.geometry.Insets?>
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.fis_2025_g6.controller.MainScreenController"
-      spacing="10" alignment="CENTER">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
-    <Button text="Registro de Usuario" onAction="#abrirRegistroUsuario"/>
-    <Button text="Contacto con Refugios" onAction="#abrirContactoRefugios"/>
-    <Button text="Contactar desarrolladores" onAction="#abrirContactoDesarrolladores"/>
-</VBox>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
+<BorderPane prefHeight="600" prefWidth="900" style="-fx-background-color: linear-gradient(to bottom, #ffffff, #f7f7f7);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fis_2025_g6.controller.MainScreenController">
+
+    <!-- Barra superior -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="30" style="-fx-background-color: linear-gradient(to right, #fdfbfb, #ebedee); -fx-padding: 15;">
+            <Label style="-fx-text-fill: #ff6b6b;" text="🐾 Adóptame" HBox.hgrow="ALWAYS">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="28" />
+                </font>
+            </Label>
+
+            <HBox alignment="CENTER" spacing="20">
+                <Button onAction="#abrirContactoRefugios" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 14;" text="Contacto con Refugios" />
+                <Button onAction="#abrirContactoDesarrolladores" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 14;" text="Contactar desarrolladores" />
+                <Button onAction="#mostrarGuiaAdopcion" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 14;" text="Guía de adopción" />
+                <Button onAction="#mostrarCatalogoMascotas" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 14;" text="Mascotas" />
+            </HBox>
+
+            <Button onAction="#abrirRegistroUsuario" style="-fx-background-color: #ff6b6b; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 20;" text="¡Regístrate!" />
+        </HBox>
+    </top>
+
+    <!-- Sección de contenido principal -->
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox alignment="TOP_LEFT" spacing="10">
+                <padding>
+                    <Insets bottom="30" left="30" right="30" top="30" />
+                </padding>
+                <Label style="-fx-text-fill: #333;" text="🐾 Adóptame">
+                    <font>
+                        <Font name="Arial Rounded MT Bold" size="24" />
+                    </font>
+                </Label>
+
+                <Label maxWidth="800" style="-fx-text-fill: #444;" text="Este proyecto es un sistema diseñado para facilitar y promover la adopción responsable de mascotas. Ayuda a conectar con los refugios y posibles adoptantes, promoviendo la transparencia y el bienestar animal. Además, permite manejar donaciones para apoyar a estos refugios." wrapText="true" />
+
+                <Label style="-fx-text-fill: #ff6b6b;" text="Características">
+                    <font>
+                        <Font name="Arial Rounded MT Bold" size="18" />
+                    </font>
+                </Label>
+                <Label maxWidth="800" style="-fx-text-fill: #444;" text=" • Registro y autenticación de usuarios (adoptantes, refugios y administradores). • Visualización de mascotas disponibles para adopción. • Gestión de mascotas por parte de los refugios. • Proceso digitalizado de adopción. • Programación de citas con refugios. • Seguimiento posadopción. • Sistema de donaciones para apoyar a los refugios." wrapText="true" />
+
+                <Label style="-fx-text-fill: #ff6b6b;" text="Objetivos">
+                    <font>
+                        <Font name="Arial Rounded MT Bold" size="18" />
+                    </font>
+                </Label>
+                <Label maxWidth="800" style="-fx-text-fill: #444;" text=" • Fomentar la adopción responsable de mascotas. • Reducir la población de animales en la calle. • Concientización sobre la importancia del bienestar animal y la problemática actual. • Optimizar el proceso de adopción mediante herramientas digitales." wrapText="true" />
+
+                <Label style="-fx-text-fill: #ff6b6b;" text="Roles">
+                    <font>
+                        <Font name="Arial Rounded MT Bold" size="18" />
+                    </font>
+                </Label>
+                <Label maxWidth="800" style="-fx-text-fill: #444;" text=" • Adoptante: Puede registrarse, ver mascotas, filtrar y solicitar adopciones. • Refugio: Puede gestionar mascotas, programar citas y realizar seguimientos posadopción. • Administrador: Tiene control sobre la plataforma, usuarios y gestión de donaciones." wrapText="true" />
+
+                <Label style="-fx-text-fill: #ff6b6b;" text="Miembros del equipo de desarrollo">
+                    <font>
+                        <Font name="Arial Rounded MT Bold" size="18" />
+                    </font>
+                </Label>
+                <Label maxWidth="800" style="-fx-text-fill: #444;" text=" • Jorge Esteban Gómez Zuluaga • Gerardo Elián Martínez Ramírez • André Sebastian Landinez Forero • Sara Rodríguez Urueña" wrapText="true" />
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
