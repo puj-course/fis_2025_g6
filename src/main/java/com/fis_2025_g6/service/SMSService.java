@@ -28,4 +28,8 @@ public class SMSService {
             System.out.println("Error al enviar SMS: " + e.getMessage());
         }
     }
+
+    public void sendSMS(String number, String message) {
+
+    }
 }
