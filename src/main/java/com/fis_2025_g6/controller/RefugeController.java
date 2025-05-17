@@ -12,6 +12,7 @@ import com.fis_2025_g6.entity.Refuge;
 import com.fis_2025_g6.factory.RefugeFactory;
 import com.fis_2025_g6.service.RefugeService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
@@ -25,11 +26,13 @@ public class RefugeController {
         this.refugeFactory = refugeFactory;
     }
 
+    @Operation(summary = "Obtener la lista de refugios", description = "Usuarios ADOPTANTE o REFUGIO")
     @GetMapping
     public List<Refuge> findAll() {
         return refugeService.findAll();
     }
 
+    @Operation(summary = "Obtener un refugio por su ID", description = "Usuarios ADOPTANTE o REFUGIO")
     @GetMapping("/{id}")
     public ResponseEntity<Refuge> findById(@PathVariable Long id) {
         return refugeService.findById(id)
@@ -37,7 +40,7 @@ public class RefugeController {
             .orElse(ResponseEntity.notFound().build());
     }
 
-    @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
+    @Operation(summary = "Obtener la lista de mascotas de un refugio", description = "Usuarios ADOPTANTE o REFUGIO")
     @GetMapping("/{id}/mascotas")
     public ResponseEntity<?> findPetsByRefuge(@PathVariable Long id) {
         return refugeService.findById(id)
@@ -45,6 +48,7 @@ public class RefugeController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Obtener la lista de donaciones a un refugio", description = "Usuarios REFUGIO")
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping("/{id}/donaciones")
     public ResponseEntity<?> findDonationsByRefuge(@PathVariable Long id) {
@@ -53,6 +57,7 @@ public class RefugeController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Crear un refugio")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Refuge> create(@RequestBody @Valid RefugeDto dto) {
@@ -67,6 +72,7 @@ public class RefugeController {
         return ResponseEntity.created(URI.create("/refugios/" + created.getId())).body(created);
     }
 
+    @Operation(summary = "Eliminar un refugio por su ID")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

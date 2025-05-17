@@ -13,6 +13,7 @@ import com.fis_2025_g6.entity.Form;
 import com.fis_2025_g6.service.ApplicationService;
 import com.fis_2025_g6.service.FormService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
@@ -26,11 +27,14 @@ public class FormController {
         this.applicationService = applicationService;
     }
 
+    @Operation(summary = "Obtener la lista de formularios", description = "Usuarios REFUGIO")
+    @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping
     public List<Form> findAll() {
         return formService.findAll();
     }
 
+    @Operation(summary = "Obtener un formulario por su ID", description = "Usuarios ADOPTANTE o REFUGIO")
     @GetMapping("/{id}")
     public ResponseEntity<Form> findById(@PathVariable Long id) {
         return formService.findById(id)
@@ -38,6 +42,7 @@ public class FormController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Crear un formulario", description = "Usuarios ADOPTANTE")
     @PreAuthorize("hasRole('ADOPTANT') or hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Form> create(@RequestBody @Valid FormDto dto) {
@@ -57,6 +62,7 @@ public class FormController {
         return ResponseEntity.created(URI.create("/formularios/" + created.getId())).body(created);
     }
 
+    @Operation(summary = "Eliminar un formulario por su ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         boolean deleted = formService.delete(id);

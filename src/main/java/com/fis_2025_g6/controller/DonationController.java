@@ -19,6 +19,7 @@ import com.fis_2025_g6.entity.User;
 import com.fis_2025_g6.service.DonationService;
 import com.fis_2025_g6.service.RefugeService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
@@ -32,12 +33,14 @@ public class DonationController {
         this.refugeService = refugeService;
     }
 
+    @Operation(summary = "Obtener la lista de donaciones")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<Donation> findAll() {
         return donationService.findAll();
     }
 
+    @Operation(summary = "Obtener una donación por su ID")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<Donation> findById(@PathVariable Long id) {
@@ -46,6 +49,7 @@ public class DonationController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Crear una donación", description = "Usuarios ADOPTANTE")
     @PreAuthorize("hasRole('ADOPTANT') or hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> create(
@@ -69,6 +73,7 @@ public class DonationController {
         return ResponseEntity.created(URI.create("/donaciones/" + created.getId())).body(created);
     }
 
+    @Operation(summary = "Eliminar una donación por su ID")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
