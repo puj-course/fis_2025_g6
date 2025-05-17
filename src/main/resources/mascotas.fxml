@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fitToWidth="true" style="-fx-background: #f5f5f5;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.fis_2025_g6.controller.PetCatalogController">
+    <content>
+        <VBox alignment="TOP_CENTER" spacing="20">
+            <padding>
+                <Insets bottom="20" left="20" right="20" top="20" />
+            </padding>
+            <children>
+                <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="🐾 Mascotas en busca de un hogar" />
+
+                <Label maxWidth="600" style="-fx-font-size: 14px; -fx-text-fill: #444444; -fx-padding: 0 40 0 40;" text="Estas son las mascotas que actualmente están buscando un hogar. Cada animal merece una segunda oportunidad. ¡Adopta y cambia una vida hoy!" wrapText="true" />
+
+                <TilePane fx:id="contenedorMascotas" hgap="20" prefColumns="3" style="-fx-padding: 10;" vgap="20">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+               <children>
+                  <Label text="Registrate ya y llena el formulario de adopción para comunicarte con un refugio. ¡Que esperas!" />
+               </children>
+                </TilePane>
+            </children>
+        </VBox>
+    </content>
+</ScrollPane>

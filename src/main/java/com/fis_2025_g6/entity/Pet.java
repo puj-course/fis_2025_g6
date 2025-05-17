@@ -42,6 +42,9 @@ public class Pet {
     @Column(name = "masc_estado", nullable = false)
     private AdoptionStatus status = AdoptionStatus.AVAILABLE;
 
+    @Column(name = "masc_fotoUrl")
+    private String photoUrl;
+
     @ManyToOne
     @JoinColumn(name = "refg_id", nullable = false)
     private Refuge refuge;
@@ -49,4 +52,12 @@ public class Pet {
     @OneToMany(mappedBy = "pet")
     @JsonIgnore
     private Set<Application> applications;
+
+    public String getFotoUrl() {
+        return this.photoUrl;
+    }
+
+    public String getNombre() {
+        return this.name;
+    }
 }

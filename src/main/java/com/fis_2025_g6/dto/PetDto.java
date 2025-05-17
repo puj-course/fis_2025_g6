@@ -23,4 +23,7 @@ public class PetDto {
 
     @NotBlank
     private String description;
+
+    @Size(max = 255)
+    private String photoUrl;
 }
