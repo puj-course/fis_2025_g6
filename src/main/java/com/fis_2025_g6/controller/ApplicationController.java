@@ -55,13 +55,13 @@ public class ApplicationController {
     @Operation(summary = "Crear una solicitud", description = "Usuarios ADOPTANTE")
     @PreAuthorize("hasRole('ADOPTANT') or hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<?> create(
+    public ResponseEntity<Application> create(
         @RequestBody @Valid ApplicationDto dto,
         @AuthenticationPrincipal CustomUserDetails principal
     ) {
         User user = principal.getUser();
         if (!(user instanceof Adoptant)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Solo un adoptante puede hacer solicitudes");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
         Pet pet = petService.findById(dto.getPetId())
             .orElseThrow(() -> new IllegalArgumentException("Mascota no encontrada"));

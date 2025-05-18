@@ -53,13 +53,13 @@ public class DonationController {
     @Operation(summary = "Crear una donación", description = "Usuarios ADOPTANTE")
     @PreAuthorize("hasRole('ADOPTANT') or hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<?> create(
+    public ResponseEntity<Donation> create(
         @RequestBody @Valid DonationDto dto,
         @AuthenticationPrincipal CustomUserDetails principal
     ) {
         User user = principal.getUser();
         if (!(user instanceof Adoptant)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Solo un adoptante puede donar");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
 
         Refuge refuge = refugeService.findByUsername(dto.getRefugeUsername())

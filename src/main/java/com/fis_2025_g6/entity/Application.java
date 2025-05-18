@@ -3,6 +3,7 @@ package com.fis_2025_g6.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,7 +19,7 @@ import com.fis_2025_g6.state.RejectedState;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Application {
+public class Application implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "solic_id")

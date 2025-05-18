@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import com.fis_2025_g6.AdoptionStatus;
 import com.fis_2025_g6.auth.CustomUserDetails;
 import com.fis_2025_g6.dto.PetDto;
+import com.fis_2025_g6.entity.Application;
 import com.fis_2025_g6.entity.Pet;
 import com.fis_2025_g6.entity.Refuge;
 import com.fis_2025_g6.entity.User;
@@ -60,7 +61,7 @@ public class PetController {
     @Operation(summary = "Obtener la lista de solicitudes para una mascota", description = "Usuarios REFUGIO")
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping("/{id}/solicitudes")
-    public ResponseEntity<?> findApplicationsByPet(@PathVariable Long id) {
+    public ResponseEntity<List<Application>> findApplicationsByPet(@PathVariable Long id) {
         return petService.findById(id)
             .map(pet -> ResponseEntity.ok(pet.getApplications()))
             .orElse(ResponseEntity.notFound().build());
@@ -69,10 +70,10 @@ public class PetController {
     @Operation(summary = "Crear una mascota", description = "Usuarios REFUGIO")
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid PetDto dto, @AuthenticationPrincipal CustomUserDetails principal) {
+    public ResponseEntity<Pet> create(@RequestBody @Valid PetDto dto, @AuthenticationPrincipal CustomUserDetails principal) {
         User user = principal.getUser();
         if (!(user instanceof Refuge)) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Solo un refugio puede crear mascotas");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
 
         Pet pet = new Pet();

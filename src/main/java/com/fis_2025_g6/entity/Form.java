@@ -1,5 +1,7 @@
 package com.fis_2025_g6.entity;
 
+import java.io.Serializable;
+
 import org.springframework.boot.context.properties.bind.Name;
 
 import jakarta.persistence.*;
@@ -10,7 +12,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Form {
+public class Form implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Name("form_id")

@@ -27,7 +27,7 @@ public class PetService {
 
     public Refuge findRefugeByUsername(String username) {
         return userRepository.findByUsername(username)
-            .filter(user -> user instanceof Refuge)
+            .filter(Refuge.class::isInstance)
             .map(user -> (Refuge)user)
             .orElseThrow(() -> new RuntimeException("Refugio no encontrado o inválido"));
     }

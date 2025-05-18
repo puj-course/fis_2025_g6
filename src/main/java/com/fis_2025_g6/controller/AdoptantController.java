@@ -59,7 +59,7 @@ public class AdoptantController {
     @Operation(summary = "Obtener la lista de solicitudes de un adoptante", description = "Usuarios ADOPTANTE")
     @PreAuthorize("hasRole('ADOPTANT') or hasRole('ADMIN')")
     @GetMapping("/{id}/solicitudes")
-    public ResponseEntity<?> getApplications(@PathVariable Long id) {
+    public ResponseEntity<List<Application>> getApplications(@PathVariable Long id) {
         if (adoptantService.findById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -70,7 +70,7 @@ public class AdoptantController {
     @Operation(summary = "Obtener la lista de donaciones de un adoptante", description = "Usuarios ADOPTANTE")
     @PreAuthorize("hasRole('ADOPTANT') or hasRole('ADMIN')")
     @GetMapping("/{id}/donaciones")
-    public ResponseEntity<?> getDonations(@PathVariable Long id) {
+    public ResponseEntity<List<Donation>> getDonations(@PathVariable Long id) {
         if (adoptantService.findById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
