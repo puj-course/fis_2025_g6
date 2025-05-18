@@ -28,15 +28,16 @@ public class RefugeController {
 
     @Operation(summary = "Obtener la lista de refugios", description = "Usuarios ADOPTANTE o REFUGIO")
     @GetMapping
-    public List<Refuge> findAll() {
-        return refugeService.findAll();
+    public ResponseEntity<List<Refuge>> findAll() {
+        List<Refuge> refuges = refugeService.findAll();
+        return ResponseEntity.ok(refuges);
     }
 
     @Operation(summary = "Obtener un refugio por su ID", description = "Usuarios ADOPTANTE o REFUGIO")
     @GetMapping("/{id}")
     public ResponseEntity<Refuge> findById(@PathVariable Long id) {
         return refugeService.findById(id)
-            .map(ResponseEntity::ok)
+            .map(refuge -> ResponseEntity.ok(refuge))
             .orElse(ResponseEntity.notFound().build());
     }
 

@@ -36,8 +36,9 @@ public class DonationController {
     @Operation(summary = "Obtener la lista de donaciones")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
-    public List<Donation> findAll() {
-        return donationService.findAll();
+    public ResponseEntity<List<Donation>> findAll() {
+        List<Donation> donations = donationService.findAll();
+        return ResponseEntity.ok(donations);
     }
 
     @Operation(summary = "Obtener una donación por su ID")
@@ -45,7 +46,7 @@ public class DonationController {
     @GetMapping("/{id}")
     public ResponseEntity<Donation> findById(@PathVariable Long id) {
         return donationService.findById(id)
-            .map(ResponseEntity::ok)
+            .map(application -> ResponseEntity.ok(application))
             .orElse(ResponseEntity.notFound().build());
     }
 

@@ -32,27 +32,29 @@ public class PetController {
 
     @Operation(summary = "Obtener la lista de mascotas", description = "Usuarios ADOPTANTE o REFUGIO")
     @GetMapping
-    public List<Pet> findAll() {
-        return petService.findAll();
+    public ResponseEntity<List<Pet>> findAll() {
+        List<Pet> pets = petService.findAll();
+        return ResponseEntity.ok(pets);
     }
 
     @Operation(summary = "Obtener una mascota por su ID", description = "Usuarios ADOPTANTE o REFUGIO")
     @GetMapping("/{id}")
     public ResponseEntity<Pet> findById(@PathVariable Long id) {
         return petService.findById(id)
-            .map(ResponseEntity::ok)
+            .map(pet -> ResponseEntity.ok(pet))
             .orElse(ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Buscar una mascota por especie, edad, sexo o estado", description = "Usuarios ADOPTANTE o REFUGIO")
     @GetMapping("/filtro")
-    public List<Pet> filter(
+    public ResponseEntity<List<Pet>> filter(
         @RequestParam(required = false) String species,
         @RequestParam(required = false) Integer age,
         @RequestParam(required = false) String sex,
         @RequestParam(required = false) AdoptionStatus status
     ) {
-        return petService.filter(species, age, sex, status);
+        List<Pet> pets = petService.filter(species, age, sex, status);
+        return ResponseEntity.ok(pets);
     }
 
     @Operation(summary = "Obtener la lista de solicitudes para una mascota", description = "Usuarios REFUGIO")
@@ -70,7 +72,7 @@ public class PetController {
     public ResponseEntity<?> create(@RequestBody @Valid PetDto dto, @AuthenticationPrincipal CustomUserDetails principal) {
         User user = principal.getUser();
         if (!(user instanceof Refuge)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Solo un refugio puede crear mascotas");
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Solo un refugio puede crear mascotas");
         }
 
         Pet pet = new Pet();

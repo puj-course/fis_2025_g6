@@ -42,8 +42,9 @@ public class AdoptantController {
     @Operation(summary = "Obtener la lista de adoptantes", description = "Usuarios REFUGIO")
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping
-    public List<Adoptant> findAll() {
-        return adoptantService.findAll();
+    public ResponseEntity<List<Adoptant>> findAll() {
+        List<Adoptant> adoptants = adoptantService.findAll();
+        return ResponseEntity.ok(adoptants);
     }
 
     @Operation(summary = "Obtener un adoptante por su ID", description = "Usuarios REFUGIO")
@@ -51,7 +52,7 @@ public class AdoptantController {
     @GetMapping("/{id}")
     public ResponseEntity<Adoptant> findById(@PathVariable Long id) {
         return adoptantService.findById(id)
-            .map(ResponseEntity::ok)
+            .map(adoptant -> ResponseEntity.ok(adoptant))
             .orElse(ResponseEntity.notFound().build());
     }
 

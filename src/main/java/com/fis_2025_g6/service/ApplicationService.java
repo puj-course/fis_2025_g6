@@ -63,6 +63,9 @@ public class ApplicationService {
     }
 
     public Application updateStatus(Long id, ApplicationStatus newStatus) {
+        if (newStatus == null) {
+            throw new IllegalArgumentException("Estado no soportado o transición inválida");
+        }
         Application application = applicationRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Solicitud no encontrada"));
         switch (newStatus) {
