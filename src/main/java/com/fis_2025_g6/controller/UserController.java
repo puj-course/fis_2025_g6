@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import com.fis_2025_g6.auth.CustomUserDetails;
 import com.fis_2025_g6.dto.UserDto;
 import com.fis_2025_g6.entity.User;
 import com.fis_2025_g6.factory.UserFactory;
@@ -41,6 +43,15 @@ public class UserController {
     public ResponseEntity<User> findById(@PathVariable Long id) {
         return userService.findById(id)
             .map(user -> ResponseEntity.ok(user))
+            .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<User> getCurrentUser(@AuthenticationPrincipal CustomUserDetails principal) {
+        User user = principal.getUser();
+        return userService.findByUsername(user.getUsername())
+            .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());
     }
 
