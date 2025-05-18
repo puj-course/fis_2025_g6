@@ -29,8 +29,9 @@ public class AdministratorController {
     @Operation(summary = "Obtener la lista de administradores")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
-    public List<Administrator> findAll() {
-        return administratorService.findAll();
+    public ResponseEntity<List<Administrator>> findAll() {
+        List<Administrator> admins = administratorService.findAll();
+        return ResponseEntity.ok(admins);
     }
 
     @Operation(summary = "Obtener un administrador por su ID")
@@ -38,7 +39,7 @@ public class AdministratorController {
     @GetMapping("/{id}")
     public ResponseEntity<Administrator> findById(@PathVariable Long id) {
         return administratorService.findById(id)
-            .map(ResponseEntity::ok)
+            .map(admin -> ResponseEntity.ok(admin))
             .orElse(ResponseEntity.notFound().build());
     }
 
@@ -54,7 +55,7 @@ public class AdministratorController {
             dto.getAddress()
         );
         Administrator created = administratorService.create(administrator);
-        return ResponseEntity.created(URI.create("/adoptantes/" + created.getId())).body(created);
+        return ResponseEntity.created(URI.create("/admins/" + created.getId())).body(created);
     }
 
     @Operation(summary = "Eliminar un administrador por su ID")

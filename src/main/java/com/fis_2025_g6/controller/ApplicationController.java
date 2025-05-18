@@ -39,28 +39,29 @@ public class ApplicationController {
     @Operation(summary = "Obtener la lista de solicitudes", description = "Usuarios REFUGIO")
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping
-    public List<Application> findAll() {
-        return applicationService.findAll();
+    public ResponseEntity<List<Application>> findAll() {
+        List<Application> applications = applicationService.findAll();
+        return ResponseEntity.ok(applications);
     }
 
     @Operation(summary = "Obtener una solicitud por su ID", description = "Usuarios ADOPTANTE o REFUGIO")
     @GetMapping("/{id}")
     public ResponseEntity<Application> findById(@PathVariable Long id) {
         return applicationService.findById(id)
-            .map(ResponseEntity::ok)
+            .map(application -> ResponseEntity.ok(application))
             .orElse(ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Crear una solicitud", description = "Usuarios ADOPTANTE")
     @PreAuthorize("hasRole('ADOPTANT') or hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<?> create(
+    public ResponseEntity<Application> create(
         @RequestBody @Valid ApplicationDto dto,
         @AuthenticationPrincipal CustomUserDetails principal
     ) {
         User user = principal.getUser();
         if (!(user instanceof Adoptant)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Solo un adoptante puede hacer solicitudes");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
         Pet pet = petService.findById(dto.getPetId())
             .orElseThrow(() -> new IllegalArgumentException("Mascota no encontrada"));

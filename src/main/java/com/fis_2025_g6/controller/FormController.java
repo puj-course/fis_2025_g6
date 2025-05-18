@@ -30,15 +30,16 @@ public class FormController {
     @Operation(summary = "Obtener la lista de formularios", description = "Usuarios REFUGIO")
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping
-    public List<Form> findAll() {
-        return formService.findAll();
+    public ResponseEntity<List<Form>> findAll() {
+        List<Form> forms = formService.findAll();
+        return ResponseEntity.ok(forms);
     }
 
     @Operation(summary = "Obtener un formulario por su ID", description = "Usuarios ADOPTANTE o REFUGIO")
     @GetMapping("/{id}")
     public ResponseEntity<Form> findById(@PathVariable Long id) {
         return formService.findById(id)
-            .map(ResponseEntity::ok)
+            .map(form -> ResponseEntity.ok(form))
             .orElse(ResponseEntity.notFound().build());
     }
 

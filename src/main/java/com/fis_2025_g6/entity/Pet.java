@@ -3,6 +3,7 @@ package com.fis_2025_g6.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import com.fis_2025_g6.AdoptionStatus;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pet {
+public class Pet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "masc_id")

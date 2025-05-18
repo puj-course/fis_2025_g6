@@ -50,7 +50,7 @@ public class AuthController {
 
     @Operation(summary = "Iniciar sesión con una cuenta", description = "Cualquier persona sin autenticar")
     @PostMapping("/iniciosesion")
-    public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest request) {
         Authentication auth = authManager.authenticate(
             new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
@@ -61,7 +61,7 @@ public class AuthController {
 
     @Operation(summary = "Registrarse en el sistema", description = "Cualquier persona sin autenticar")
     @PostMapping("/registro")
-    public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request, BindingResult result) {
+    public ResponseEntity<Object> register(@RequestBody @Valid RegisterRequest request, BindingResult result) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             return ResponseEntity.badRequest().body("El correo ya está registrado");
         }

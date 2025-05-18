@@ -30,8 +30,9 @@ public class UserController {
     @Operation(summary = "Obtener la lista de usuarios", description = "Usuarios REFUGIO")
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping
-    public List<User> findAll() {
-        return userService.findAll();
+    public ResponseEntity<List<User>> findAll() {
+        List<User> users = userService.findAll();
+        return ResponseEntity.ok(users);
     }
 
     @Operation(summary = "Obtener un usuario por su ID", description = "Usuarios REFUGIO")
@@ -39,7 +40,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
         return userService.findById(id)
-            .map(ResponseEntity::ok)
+            .map(user -> ResponseEntity.ok(user))
             .orElse(ResponseEntity.notFound().build());
     }
 
