@@ -4,12 +4,14 @@ import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fis_2025_g6.auth.CustomUserDetails;
 import com.fis_2025_g6.entity.User;
 import com.fis_2025_g6.service.NotificationService;
 import com.fis_2025_g6.service.UserService;
@@ -25,6 +27,18 @@ public class SMSController {
     public SMSController(NotificationService notificationService, UserService userService) {
         this.notificationService = notificationService;
         this.userService = userService;
+    }
+
+    @Operation(summary = "Enviarse SMS", description = "Usuarios ADOPTANTE o REFUGIO")
+    @PostMapping("/me")
+    public ResponseEntity<String> sendMeSMS(
+        @RequestParam String number,
+        @RequestParam String message,
+        @AuthenticationPrincipal CustomUserDetails principal
+    ) {
+        User destination = principal.getUser();
+        notificationService.send(message, destination.getPhoneNumber());
+        return ResponseEntity.ok("SMS enviado a " + number);
     }
 
     @Operation(summary = "Enviar un SMS a un número de teléfono", description = "Usuarios REFUGIO")

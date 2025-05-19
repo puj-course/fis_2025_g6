@@ -28,6 +28,10 @@ public class DonationService {
         return donationRepository.findByAdoptantId(adoptantId);
     }
 
+    public List<Donation> findByRefugeId(Long refugeId) {
+        return donationRepository.findByRefugeId(refugeId);
+    }
+
     public Donation create(Donation donation) {
         return donationRepository.save(donation);
     }

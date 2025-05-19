@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DonationRepository extends JpaRepository<Donation, Long> {
     List<Donation> findByAdoptantId(Long adoptantId);
+    List<Donation> findByRefugeId(Long refugeId);
 }

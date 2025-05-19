@@ -24,6 +24,22 @@ public class AdoptantService {
         return adoptantRepository.findById(id);
     }
 
+    public Optional<Adoptant> findByUsername(String username) {
+        return adoptantRepository.findByUsername(username);
+    }
+
+    public Adoptant update(Adoptant adoptant) {
+        return adoptantRepository.save(adoptant);
+    }
+
+    public boolean existsByUsernameAndIdNot(String username, Long id) {
+        return adoptantRepository.existsByUsernameAndIdNot(username, id);
+    }
+
+    public boolean existsByEmailAndIdNot(String email, Long id) {
+        return adoptantRepository.existsByEmailAndIdNot(email, id);
+    }
+
     public Adoptant create(Adoptant adoptant) {
         return adoptantRepository.save(adoptant);
     }

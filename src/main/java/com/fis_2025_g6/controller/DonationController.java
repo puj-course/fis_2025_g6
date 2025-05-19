@@ -50,6 +50,15 @@ public class DonationController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Obtener donaciones propias", description = "Usuarios REFUGIO")
+    @PreAuthorize("hasRole('REFUGE')")
+    @GetMapping("/me")
+    public ResponseEntity<List<Donation>> findCurrentDonations(@AuthenticationPrincipal CustomUserDetails principal) {
+        Refuge refuge = principal.getAsRefuge().get();
+        List<Donation> donations = donationService.findByRefugeId(refuge.getId());
+        return ResponseEntity.ok(donations);
+    }
+
     @Operation(summary = "Crear una donación", description = "Usuarios ADOPTANTE")
     @PreAuthorize("hasRole('ADOPTANT') or hasRole('ADMIN')")
     @PostMapping

@@ -12,9 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import com.fis_2025_g6.auth.AuthResponse;
 import com.fis_2025_g6.auth.JwtUtil;
 import com.fis_2025_g6.dto.AuthRequest;
+import com.fis_2025_g6.dto.AuthResponse;
 import com.fis_2025_g6.dto.RegisterRequest;
 import com.fis_2025_g6.entity.User;
 import com.fis_2025_g6.factory.AdministratorFactory;
@@ -56,7 +56,7 @@ public class AuthController {
         );
         UserDetails userDetails = (UserDetails)auth.getPrincipal();
         String token = jwtUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new AuthResponse(token));
+        return ResponseEntity.ok(new AuthResponse(token, userDetails));
     }
 
     @Operation(summary = "Registrarse en el sistema", description = "Cualquier persona sin autenticar")

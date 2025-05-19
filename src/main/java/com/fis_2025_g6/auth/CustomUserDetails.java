@@ -2,6 +2,7 @@ package com.fis_2025_g6.auth;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -66,5 +67,17 @@ public class CustomUserDetails implements UserDetails {
 
     public User getUser() {
         return user;
+    }
+
+    public Optional<Adoptant> getAsAdoptant() {
+        return user instanceof Adoptant ? Optional.of((Adoptant)user) : Optional.empty();
+    }
+
+    public Optional<Refuge> getAsRefuge() {
+        return user instanceof Refuge ? Optional.of((Refuge)user) : Optional.empty();
+    }
+
+    public Optional<Administrator> getAsAdministrator() {
+        return user instanceof Administrator ? Optional.of((Administrator)user) : Optional.empty();
     }
 }
