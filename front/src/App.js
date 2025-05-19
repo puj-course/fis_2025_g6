@@ -9,6 +9,8 @@ import { AuthProvider } from './context/AuthContext';
 import RoleRoute from './components/RoleRoute';
 import ApplicationList from './pages/ApplicationList';
 import RefugeListPage from './pages/RefugeList';
+import RefugePetsPage from './pages/RefugePetsPage';
+import DonationsPage from './pages/DonationsPage';
 
 function App() {
     return (
@@ -19,13 +21,47 @@ function App() {
                     <Route path="/registro" element={<RegisterPage />} />
                     <Route path="/iniciosesion" element={<LoginPage />} />
                     <Route path="/perfil" element={<ProfilePage />} />
-                    <Route path="/lista-mascotas" element={<PetListPage />} />
-                    <Route path="/lista-refugios" element={<RefugeListPage />} />
+
+                    {/* Rutas para ADOPTANT */}
+                    <Route
+                        path="/lista-mascotas"
+                        element={
+                            <RoleRoute allowed={['ADOPTANT']}>
+                                <PetListPage />
+                            </RoleRoute>
+                        }
+                    />
+                    <Route
+                        path="/lista-refugios"
+                        element={
+                            <RoleRoute allowed={['ADOPTANT']}>
+                                <RefugeListPage />
+                            </RoleRoute>
+                        }
+                    />
                     <Route
                         path="/solicitudes"
                         element={
                             <RoleRoute allowed={['ADOPTANT']}>
                                 <ApplicationList />
+                            </RoleRoute>
+                        }
+                    />
+
+                    {/* Rutas para REFUGE */}
+                    <Route
+                        path="/donaciones"
+                        element={
+                            <RoleRoute allowed={['REFUGE']}>
+                                <DonationsPage />
+                            </RoleRoute>
+                        }
+                    />
+                    <Route
+                        path="/mascotas"
+                        element={
+                            <RoleRoute allowed={['REFUGE']}>
+                                <RefugePetsPage />
                             </RoleRoute>
                         }
                     />

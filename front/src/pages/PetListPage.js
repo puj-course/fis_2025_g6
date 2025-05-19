@@ -4,6 +4,7 @@ import { Modal } from 'bootstrap';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import PetCard from "../components/PetCard";
+import { translatePetStatus } from '../util/Util';
 
 const PetListPage = () => {
     const [pets, setPets] = useState([]);
@@ -151,19 +152,6 @@ const PetListPage = () => {
         modal.show();
     };
 
-    const translateStatus = status => {
-        switch (status) {
-            case 'AVAILABLE':
-                return 'Disponible';
-            case 'IN_PROCESS':
-                return 'En proceso';
-            case 'ADOPTED':
-                return 'Adoptado';
-            default:
-                return '';
-        }
-    }
-
     const handleApply = async (petId) => {
         try {
             const token = localStorage.getItem('token');
@@ -195,7 +183,7 @@ const PetListPage = () => {
 Resumen de solicitud
 ID de solicitud: ${id}
 Fecha: ${date}
-Estado: ${translateStatus(status)}
+Estado: ${translatePetStatus(status)}
 
 --- Mascota ---
 Nombre: ${pet.name}
@@ -314,7 +302,7 @@ Dirección: ${adoptant.address}
                                 <div className="modal-body">
                                     <p><strong>ID de solicitud:</strong> {applicationSummary.id}</p>
                                     <p><strong>Fecha:</strong> {applicationSummary.date}</p>
-                                    <p><strong>Estado:</strong> {translateStatus(applicationSummary.status)}</p>
+                                    <p><strong>Estado:</strong> {translatePetStatus(applicationSummary.status)}</p>
                                     <hr />
                                     <h6>Mascota:</h6>
                                     <p><strong>Nombre:</strong> {applicationSummary.pet.name}</p>
