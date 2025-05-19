@@ -7,7 +7,8 @@ import PetCard from "../components/PetCard";
 
 const PetListPage = () => {
     const [pets, setPets] = useState([]);
-    const [refuges, setRefuges] = useState([]);
+     // eslint-disable-next-line
+    const [_refuges, setRefuges] = useState([]);
     const [filters, setFilters] = useState({
         species: '',
         age: '',

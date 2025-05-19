@@ -1,6 +1,20 @@
 import React from "react";
 
 const PetCard = ({ pet, hasActiveApplication, onApply, onShowRefuge }) => {
+
+  const translateStatus = status => {
+    switch (status) {
+      case 'AVAILABLE':
+        return 'Disponible';
+      case 'IN_PROCESS':
+        return 'En proceso';
+      case 'ADOPTED':
+        return 'Adoptado';
+      default:
+        return '';
+    }
+  }
+
   return (
     <div className="col-md-4 mb-4">
       <div className="card h-100">
@@ -10,7 +24,7 @@ const PetCard = ({ pet, hasActiveApplication, onApply, onShowRefuge }) => {
           <p className="card-text"><strong>Especie:</strong> {pet.species}</p>
           <p className="card-text"><strong>Edad:</strong> {pet.age}</p>
           <p className="card-text"><strong>Sexo:</strong> {pet.sex}</p>
-          <p className="card-text"><strong>Estado:</strong> {pet.status}</p>
+          <p className="card-text"><strong>Estado:</strong> {translateStatus(pet.status)}</p>
           <p className="card-text">{pet.description}</p>
 
           {pet.refuge && (
