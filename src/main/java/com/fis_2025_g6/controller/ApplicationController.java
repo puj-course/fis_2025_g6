@@ -104,7 +104,7 @@ public class ApplicationController {
 
     @Operation(summary = "Actualizar el estado de una solicitud por su ID", description = "Usuarios REFUGIO")
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Application> updateStatus(@PathVariable Long id, @RequestBody UpdateApplicationStatusDto dto) {
         try {
             Application updated = applicationService.updateStatus(id, dto.getStatus());
