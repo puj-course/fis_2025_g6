@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PetRepository extends JpaRepository<Pet, Long> {
+    List<Pet> findByRefugeId(Long refugeId);
+
     @Query(
         "SELECT p FROM Pet p WHERE "
         + "(:species IS NULL OR p.species = :species) AND "

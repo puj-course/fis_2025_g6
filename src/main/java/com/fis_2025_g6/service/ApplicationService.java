@@ -13,6 +13,8 @@ import java.util.Optional;
 public class ApplicationService {
     private final ApplicationRepository applicationRepository;
 
+    private final String notFoundMessage = "Solicitud no encontrada";
+
     public ApplicationService(ApplicationRepository applicationRepository) {
         this.applicationRepository = applicationRepository;
     }
@@ -23,6 +25,10 @@ public class ApplicationService {
 
     public Optional<Application> findById(Long id) {
         return applicationRepository.findById(id);
+    }
+
+    public List<Application> findByAdoptantId(Long adoptantId) {
+        return applicationRepository.findByAdoptantId(adoptantId);
     }
 
     public Application create(Application application) {
@@ -39,33 +45,37 @@ public class ApplicationService {
 
     public Application approve(Long id) {
         Application application = applicationRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Solicitud no encontrada"));
+            .orElseThrow(() -> new IllegalArgumentException(notFoundMessage));
         application.approve();
         return applicationRepository.save(application);
     }
 
     public Application reject(Long id) {
         Application application = applicationRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Solicitud no encontrada"));
+            .orElseThrow(() -> new IllegalArgumentException(notFoundMessage));
         application.reject();
         return applicationRepository.save(application);
     }
 
     public Application cancel(Long id) {
         Application application = applicationRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Solicitud no encontrada"));
+            .orElseThrow(() -> new IllegalArgumentException(notFoundMessage));
         application.cancel();
         return applicationRepository.save(application);
     }
 
     public Application updateStatus(Long id, ApplicationStatus newStatus) {
+        String invalidMessage = "Estado no soportado o transición inválida";
+        if (newStatus == null) {
+            throw new IllegalArgumentException(invalidMessage);
+        }
         Application application = applicationRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Solicitud no encontrada"));
+            .orElseThrow(() -> new IllegalArgumentException(notFoundMessage));
         switch (newStatus) {
             case APPROVED -> application.approve();
             case REJECTED -> application.reject();
             case CANCELED -> application.cancel();
-            default -> throw new IllegalArgumentException("Estado no soportado o transición inválida");
+            default -> throw new IllegalArgumentException(invalidMessage);
         }
         return applicationRepository.save(application);
     }

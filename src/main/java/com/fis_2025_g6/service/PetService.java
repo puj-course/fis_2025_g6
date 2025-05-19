@@ -25,9 +25,13 @@ public class PetService {
         return petRepository.filter(species, age, sex, status);
     }
 
+    public List<Pet> findByRefugeId(Long refugeId) {
+        return petRepository.findByRefugeId(refugeId);
+    }
+
     public Refuge findRefugeByUsername(String username) {
         return userRepository.findByUsername(username)
-            .filter(user -> user instanceof Refuge)
+            .filter(Refuge.class::isInstance)
             .map(user -> (Refuge)user)
             .orElseThrow(() -> new RuntimeException("Refugio no encontrado o inválido"));
     }

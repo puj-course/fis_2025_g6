@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
-<VBox fx:id="layout" spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml" fx:controller="com.fis_2025_g6.controller.RefugesContactsController">
-    <Label text="Cargando refugios..."/>
-</VBox>

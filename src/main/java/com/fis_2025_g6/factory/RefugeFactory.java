@@ -16,7 +16,7 @@ public class RefugeFactory extends UserFactory {
         refuge.setPhoneNumber(phoneNumber);
         refuge.setAddress(address);
         refuge.setRefugeName(username);
-        refuge.setDescription("Sin descripción.");
+        refuge.setDescription("Sin descripción");
         return refuge;
     }
 }

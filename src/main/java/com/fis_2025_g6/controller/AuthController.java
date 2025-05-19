@@ -12,15 +12,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import com.fis_2025_g6.auth.AuthResponse;
 import com.fis_2025_g6.auth.JwtUtil;
 import com.fis_2025_g6.dto.AuthRequest;
+import com.fis_2025_g6.dto.AuthResponse;
 import com.fis_2025_g6.dto.RegisterRequest;
 import com.fis_2025_g6.entity.User;
 import com.fis_2025_g6.factory.AdministratorFactory;
 import com.fis_2025_g6.factory.AdoptantFactory;
 import com.fis_2025_g6.factory.RefugeFactory;
 import com.fis_2025_g6.repository.UserRepository;
+
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/auth")
@@ -46,18 +48,20 @@ public class AuthController {
     @Autowired
     private AdministratorFactory administratorFactory;
 
+    @Operation(summary = "Iniciar sesión con una cuenta", description = "Cualquier persona sin autenticar")
     @PostMapping("/iniciosesion")
-    public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest request) {
         Authentication auth = authManager.authenticate(
             new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
         UserDetails userDetails = (UserDetails)auth.getPrincipal();
         String token = jwtUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new AuthResponse(token));
+        return ResponseEntity.ok(new AuthResponse(token, userDetails));
     }
 
+    @Operation(summary = "Registrarse en el sistema", description = "Cualquier persona sin autenticar")
     @PostMapping("/registro")
-    public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request, BindingResult result) {
+    public ResponseEntity<Object> register(@RequestBody @Valid RegisterRequest request, BindingResult result) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             return ResponseEntity.badRequest().body("El correo ya está registrado");
         }

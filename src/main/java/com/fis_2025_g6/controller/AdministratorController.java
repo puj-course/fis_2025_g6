@@ -12,6 +12,7 @@ import com.fis_2025_g6.entity.Administrator;
 import com.fis_2025_g6.factory.AdministratorFactory;
 import com.fis_2025_g6.service.AdministratorService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
@@ -25,20 +26,24 @@ public class AdministratorController {
         this.administratorFactory = adoptantFactory;
     }
 
+    @Operation(summary = "Obtener la lista de administradores")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
-    public List<Administrator> findAll() {
-        return administratorService.findAll();
+    public ResponseEntity<List<Administrator>> findAll() {
+        List<Administrator> admins = administratorService.findAll();
+        return ResponseEntity.ok(admins);
     }
 
+    @Operation(summary = "Obtener un administrador por su ID")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<Administrator> findById(@PathVariable Long id) {
         return administratorService.findById(id)
-            .map(ResponseEntity::ok)
+            .map(admin -> ResponseEntity.ok(admin))
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Crear un administrador")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Administrator> create(@RequestBody @Valid AdministratorDto dto) {
@@ -50,9 +55,10 @@ public class AdministratorController {
             dto.getAddress()
         );
         Administrator created = administratorService.create(administrator);
-        return ResponseEntity.created(URI.create("/adoptantes/" + created.getId())).body(created);
+        return ResponseEntity.created(URI.create("/admins/" + created.getId())).body(created);
     }
 
+    @Operation(summary = "Eliminar un administrador por su ID")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

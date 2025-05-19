@@ -1,6 +1,6 @@
 package com.fis_2025_g6.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,9 +23,9 @@ public class Refuge extends User {
 
     @OneToMany(mappedBy = "refuge")
     @JsonIgnore
-    private Set<Pet> pets;
+    private List<Pet> pets;
 
     @OneToMany(mappedBy = "refuge")
     @JsonIgnore
-    private Set<Donation> receivedDonations;
+    private List<Donation> receivedDonations;
 }
