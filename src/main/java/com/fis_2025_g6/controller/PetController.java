@@ -58,6 +58,14 @@ public class PetController {
         return ResponseEntity.ok(pets);
     }
 
+    @Operation(summary = "Obtener mascotas propias", description = "Usuarios REFUGIO")
+    @GetMapping("/me")
+    public ResponseEntity<List<Pet>> findCurrentPets(@AuthenticationPrincipal CustomUserDetails principal) {
+        Refuge refuge = principal.getAsRefuge().get();
+        List<Pet> pets = petService.findByRefugeId(refuge.getId());
+        return ResponseEntity.ok(pets);
+    }
+
     @Operation(summary = "Obtener la lista de solicitudes para una mascota", description = "Usuarios REFUGIO")
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @GetMapping("/{id}/solicitudes")

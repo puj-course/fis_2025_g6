@@ -5,12 +5,16 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import com.fis_2025_g6.auth.CustomUserDetails;
 import com.fis_2025_g6.dto.AdoptantDto;
+import com.fis_2025_g6.dto.UpdateAdoptantDto;
 import com.fis_2025_g6.entity.Adoptant;
 import com.fis_2025_g6.entity.Application;
 import com.fis_2025_g6.entity.Donation;
+import com.fis_2025_g6.entity.User;
 import com.fis_2025_g6.factory.AdoptantFactory;
 import com.fis_2025_g6.service.AdoptantService;
 import com.fis_2025_g6.service.ApplicationService;
@@ -56,13 +60,24 @@ public class AdoptantController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Obtener el usuario propio")
+    @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Adoptant> findCurrentAdoptant(@AuthenticationPrincipal CustomUserDetails principal) {
+        User user = principal.getUser();
+        return adoptantService.findByUsername(user.getUsername())
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+
     @Operation(summary = "Obtener la lista de solicitudes de un adoptante", description = "Usuarios ADOPTANTE")
     @PreAuthorize("hasRole('ADOPTANT') or hasRole('ADMIN')")
     @GetMapping("/{id}/solicitudes")
-    public ResponseEntity<List<Application>> getApplications(@PathVariable Long id) {
+    public ResponseEntity<List<Application>> findApplications(@PathVariable Long id) {
         if (adoptantService.findById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+
         List<Application> applications = applicationService.findByAdoptantId(id);
         return ResponseEntity.ok(applications);
     }
@@ -74,6 +89,7 @@ public class AdoptantController {
         if (adoptantService.findById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+
         List<Donation> donations = donationService.findByAdoptantId(id);
         return ResponseEntity.ok(donations);
     }
@@ -89,6 +105,7 @@ public class AdoptantController {
             dto.getPhoneNumber(),
             dto.getAddress()
         );
+        adoptant.setAdoptantName(dto.getAdoptantName());
         Adoptant created = adoptantService.create(adoptant);
         return ResponseEntity.created(URI.create("/adoptantes/" + created.getId())).body(created);
     }
@@ -99,5 +116,35 @@ public class AdoptantController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         boolean deleted = adoptantService.delete(id);
         return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    }
+
+    @Operation(summary = "Actualizar datos del adoptante", description = "Usuarios ADOPTANTE")
+    @PreAuthorize("hasRole('ADOPTANT')")
+    @PutMapping("/me")
+    public ResponseEntity<Adoptant> update(
+        @RequestBody UpdateAdoptantDto dto,
+        @AuthenticationPrincipal CustomUserDetails principal
+    ) {
+        Adoptant adoptant = principal.getAsAdoptant().get();
+        Long currentId = adoptant.getId();
+
+        if (dto.getUsername() != null) {
+            if (adoptantService.existsByUsernameAndIdNot(dto.getUsername(), currentId)) {
+                return ResponseEntity.badRequest().body(null);
+            }
+            adoptant.setUsername(dto.getUsername());
+        }
+        if (dto.getEmail() != null) {
+            if (adoptantService.existsByEmailAndIdNot(dto.getEmail(), currentId)) {
+                return ResponseEntity.badRequest().body(null);
+            }
+            adoptant.setEmail(dto.getEmail());
+        }
+        if (dto.getPhoneNumber() != null) adoptant.setPhoneNumber(dto.getPhoneNumber());
+        if (dto.getAddress() != null) adoptant.setAddress(dto.getAddress());
+        if (dto.getAdoptantName() != null) adoptant.setAdoptantName(dto.getAdoptantName());
+
+        Adoptant updated = adoptantService.update(adoptant);
+        return ResponseEntity.ok(updated);
     }
 }

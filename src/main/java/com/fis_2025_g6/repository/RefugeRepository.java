@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RefugeRepository extends JpaRepository<Refuge, Long> {
     Optional<Refuge> findByUsername(String username);
+    boolean existsByUsernameAndIdNot(String username, Long id);
+    boolean existsByEmailAndIdNot(String email, Long id);
 }

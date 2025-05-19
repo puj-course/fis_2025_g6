@@ -46,9 +46,10 @@ public class UserController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Obtener el usuario propio")
     @GetMapping("/me")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<User> getCurrentUser(@AuthenticationPrincipal CustomUserDetails principal) {
+    public ResponseEntity<User> findCurrentUser(@AuthenticationPrincipal CustomUserDetails principal) {
         User user = principal.getUser();
         return userService.findByUsername(user.getUsername())
             .map(ResponseEntity::ok)
