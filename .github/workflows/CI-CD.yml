@@ -57,6 +57,12 @@ jobs:
       - name: 🔄 Checkout del código fuente
         uses: actions/checkout@v3
 
+      - name: ⬇️ Descargar artefacto JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: app-jar
+          path: target
+
       - name: 🐳 Construir y subir imagen Docker
         uses: docker/build-push-action@v4
         with:
