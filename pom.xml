@@ -166,6 +166,12 @@
       <artifactId>junit-jupiter-params</artifactId>
       <scope>test</scope>
     </dependency>
+  
+    <dependency>
+      <groupId>io.bitbucket.supportomateinc</groupId>
+      <artifactId>restcomm-connect.email</artifactId>
+      <version>9.0.0</version>
+    </dependency>
   </dependencies>
 
   <build>
