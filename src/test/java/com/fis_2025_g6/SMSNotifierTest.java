@@ -11,8 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.fis_2025_g6.notification.SMSNotifier;
-import com.fis_2025_g6.service.NotificationService;
-import com.fis_2025_g6.notification.Notifier;
 
 import static org.mockito.Mockito.*;
 

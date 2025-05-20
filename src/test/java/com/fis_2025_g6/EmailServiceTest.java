@@ -22,6 +22,7 @@ public class EmailServiceTest {
         emailService = new EmailService(mailSender);
     }
 
+    @SuppressWarnings("null")
     @Test
     void testSendEmail() {
         String to = "test@example.com";

@@ -1,6 +1,5 @@
 package com.fis_2025_g6;
 
-import com.fis_2025_g6.auth.CustomUserDetails;
 import com.fis_2025_g6.controller.EmailController;
 import com.fis_2025_g6.entity.User;
 import com.fis_2025_g6.service.EmailService;
@@ -11,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import org.springframework.http.MediaType;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
