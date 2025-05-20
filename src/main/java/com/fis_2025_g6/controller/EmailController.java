@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
@@ -30,9 +32,17 @@ public class EmailController {
         @RequestParam String message,
         @AuthenticationPrincipal CustomUserDetails principal
     ) {
-        User destination = principal.getUser();
-        emailService.sendEmail(destination.getEmail(), subject, message);
-        return ResponseEntity.ok("Correo enviado a " + destination.getUsername());
+        System.out.println("Principal: " + principal);
+    if (principal == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No autenticado");
+    }
+    User destination = principal.getUser();
+    System.out.println("Destination user: " + destination);
+    if (destination == null) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Usuario no encontrado en principal");
+    }
+    emailService.sendEmail(destination.getEmail(), subject, message);
+    return ResponseEntity.ok("Correo enviado a " + destination.getUsername());
     }
 
     @Operation(summary = "Enviar correo a un usuario", description = "Usuarios REFUGIO")
