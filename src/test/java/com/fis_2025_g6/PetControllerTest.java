@@ -1,8 +1,11 @@
 package com.fis_2025_g6;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
@@ -237,4 +240,80 @@ public class PetControllerTest {
                 .with(user("refugeUser").roles("REFUGE")))
             .andExpect(status().isNotFound());
     }
+
+    @Test
+    void testUpdate_Success() throws Exception {
+        // Datos de prueba
+        Long petId = 1L;
+        PetDto petDto = new PetDto();
+        petDto.setName("Bobi Actualizado");
+        petDto.setSpecies("Perro");
+        petDto.setAge(3); // Cambiado de 2 a 3
+        petDto.setSex("Macho");
+        petDto.setDescription("Un perro aún más cariñoso");
+        
+        // Pet existente
+        Pet existingPet = new Pet();
+        existingPet.setId(petId);
+        existingPet.setName("Bobi");
+        existingPet.setSpecies("Perro");
+        existingPet.setAge(2);
+        existingPet.setSex("Macho");
+        existingPet.setDescription("Un perro muy cariñoso");
+        existingPet.setStatus(AdoptionStatus.AVAILABLE);
+        
+        // Pet actualizado
+        Pet updatedPet = new Pet();
+        updatedPet.setId(petId);
+        updatedPet.setName("Bobi Actualizado");
+        updatedPet.setSpecies("Perro");
+        updatedPet.setAge(3);
+        updatedPet.setSex("Macho");
+        updatedPet.setDescription("Un perro aún más cariñoso");
+        updatedPet.setStatus(AdoptionStatus.AVAILABLE);
+
+        // Configurar mocks
+        when(petService.findById(petId)).thenReturn(Optional.of(existingPet));
+        when(petService.update(eq(petId), any(PetDto.class))).thenReturn(Optional.of(updatedPet)); 
+
+        // Convertir DTO a JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        String petDtoJson = objectMapper.writeValueAsString(petDto);
+
+        // Ejecutar y verificar
+        mockMvc.perform(put("/mascotas/{id}", petId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(petDtoJson)
+                .with(user("refugeUser").roles("REFUGE"))
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").value(petId))
+            .andExpect(jsonPath("$.name").value("Bobi Actualizado"))
+            .andExpect(jsonPath("$.age").value(3))
+            .andExpect(jsonPath("$.description").value("Un perro aún más cariñoso"));
+
+        verify(petService).update(eq(petId), any(PetDto.class)); 
+}
+
+@Test
+void testUpdate_NotFound() throws Exception {
+    Long petId = 1L;
+    PetDto petDto = new PetDto();
+    petDto.setName("Bobi Actualizado");
+
+    when(petService.update(eq(petId), any(PetDto.class))).thenReturn(Optional.empty());
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    String petDtoJson = objectMapper.writeValueAsString(petDto);
+
+    mockMvc.perform(put("/mascotas/{id}", petId)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(petDtoJson)
+            .with(user("refugeUser").roles("REFUGE"))
+            .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound());
+
+    verify(petService).update(eq(petId), any(PetDto.class));
+}
+
 }

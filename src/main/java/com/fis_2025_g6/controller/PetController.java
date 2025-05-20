@@ -104,4 +104,13 @@ public class PetController {
         boolean deleted = petService.delete(id);
         return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('REFUGE')")
+    public ResponseEntity<Pet> update(@PathVariable Long id, @RequestBody PetDto petDto) {
+        return petService.update(id, petDto)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+
 }
