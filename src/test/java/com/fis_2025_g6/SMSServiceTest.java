@@ -42,18 +42,13 @@ class SMSServiceTest {
         String body = "Test message";
 
         try (MockedStatic<Message> mockedMessage = mockStatic(Message.class)) {
-            // Mock the static creator method
             when(Message.creator(any(PhoneNumber.class), any(PhoneNumber.class), any(String.class)))
                 .thenReturn(messageCreator);
             
-            // Mock the create() method on the MessageCreator
             Message mockMessage = mock(Message.class);
             when(messageCreator.create()).thenReturn(mockMessage);
 
-            // Execute the method under test
             smsService.sendSMS(to, body);
-
-            // Verify the creator was called with correct parameters
             ArgumentCaptor<PhoneNumber> toCaptor = ArgumentCaptor.forClass(PhoneNumber.class);
             ArgumentCaptor<PhoneNumber> fromCaptor = ArgumentCaptor.forClass(PhoneNumber.class);
             ArgumentCaptor<String> bodyCaptor = ArgumentCaptor.forClass(String.class);
@@ -63,19 +58,17 @@ class SMSServiceTest {
                     fromCaptor.capture(),
                     bodyCaptor.capture()));
 
-            // Verify the values
             assertEquals(to, toCaptor.getValue().getEndpoint());
             assertEquals(testFromNumber, fromCaptor.getValue().getEndpoint());
             assertEquals(body, bodyCaptor.getValue());
             
-            // Verify create() was called
             verify(messageCreator).create();
         }
     }
 
     @Test
     void sendSMS_ShouldTrimToNumber() {
-        String to = "  +1987654321  "; // With spaces
+        String to = "  +1987654321  "; 
         String body = "Test message";
 
         try (MockedStatic<Message> mockedMessage = mockStatic(Message.class)) {
@@ -94,7 +87,6 @@ class SMSServiceTest {
                     any(PhoneNumber.class),
                     any(String.class)));
 
-            // Verify the number was trimmed
             assertEquals("+1987654321", toCaptor.getValue().getEndpoint());
         }
     }
@@ -105,11 +97,10 @@ class SMSServiceTest {
         String body = null;
 
         try (MockedStatic<Message> mockedMessage = mockStatic(Message.class)) {
-            // Explicitly specify which creator method to use by matching parameter types
             when(Message.creator(
-                any(PhoneNumber.class),  // First PhoneNumber (to)
-                any(PhoneNumber.class),  // Second PhoneNumber (from)
-                nullable(String.class)  // Explicitly allow null String
+                any(PhoneNumber.class), 
+                any(PhoneNumber.class),  
+                nullable(String.class)  
             )).thenReturn(messageCreator);
             
             Message mockMessage = mock(Message.class);
@@ -117,7 +108,6 @@ class SMSServiceTest {
 
             assertDoesNotThrow(() -> smsService.sendSMS(to, body));
 
-            // Verify with the same explicit parameter types
             mockedMessage.verify(() -> Message.creator(
                 any(PhoneNumber.class),
                 any(PhoneNumber.class),
