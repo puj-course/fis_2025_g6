@@ -46,32 +46,32 @@ class SMSControllerTest {
     private UserService userService;
     
     @Test
-public void testSendMeSMS() throws Exception {
-    // Crear un usuario falso
-    User mockUser = new User();
-    mockUser.setPhoneNumber("123456789");
-    mockUser.setUsername("usuario123");
+    public void testSendMeSMS() throws Exception {
+        // Crear un usuario falso
+        User mockUser = new User();
+        mockUser.setPhoneNumber("123456789");
+        mockUser.setUsername("usuario123");
 
-    // Crear CustomUserDetails a partir del usuario
-    CustomUserDetails userDetails = new CustomUserDetails(mockUser);
+        // Crear CustomUserDetails a partir del usuario
+        CustomUserDetails userDetails = new CustomUserDetails(mockUser);
 
-    // Simular autenticación en el contexto de seguridad
-    SecurityContext context = SecurityContextHolder.createEmptyContext();
-    context.setAuthentication(
-        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities())
-    );
-    SecurityContextHolder.setContext(context);
+        // Simular autenticación en el contexto de seguridad
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(
+            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities())
+        );
+        SecurityContextHolder.setContext(context);
 
-    // Ejecutar la solicitud y verificar respuesta
-    mockMvc.perform(post("/sms/me")
-            .param("number", "123456789")
-            .param("message", "Hola mundo"))
-        .andExpect(status().isOk())
-        .andExpect(content().string("SMS enviado a 123456789"));
+        // Ejecutar la solicitud y verificar respuesta
+        mockMvc.perform(post("/sms/me")
+                .param("number", "123456789")
+                .param("message", "Hola mundo"))
+            .andExpect(status().isOk())
+            .andExpect(content().string("SMS enviado a 123456789"));
 
-    // Verificar que se haya llamado al método send con los argumentos correctos
-    Mockito.verify(notificationService).send("Hola mundo", "123456789");
-}
+        // Verificar que se haya llamado al método send con los argumentos correctos
+        Mockito.verify(notificationService).send("Hola mundo", "123456789");
+    }
 
 
     @Test
