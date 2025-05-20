@@ -1,0 +1,44 @@
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+public class PantallaRequisitosAdopcionFX extends Application {
+
+    public static void main(String[] args) {
+        launch(args); // Obligatorio para iniciar JavaFX
+    }
+
+    @Override
+    public void start(Stage stage) {
+        
+        Label titulo = new Label("El sistema debe proporcionar a los usuarios los requisitos necesarios para poder adoptar a la mascota.");
+        titulo.setWrapText(true);
+        titulo.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 10;");
+        
+        TextArea requisitos = new TextArea(
+                "Requisitos para adoptar una mascota:\n\n" +
+                "1. Ser mayor de edad (18 años o más).\n" +
+                "2. Presentar un documento de identidad válido.\n" +
+                "3. Completar el formulario de adopción.\n" +
+                "4. Aceptar una visita domiciliaria previa.\n" +
+                "5. Comprometerse a brindar cuidado, alimentación y atención veterinaria.\n" +
+                "6. Firmar el contrato de adopción.\n" +
+                "7. En algunos casos, pagar una cuota de adopción simbólica."
+        );
+        requisitos.setEditable(false);
+        requisitos.setWrapText(true);
+        requisitos.setPrefHeight(180);
+        requisitos.setStyle("-fx-font-size: 13px; -fx-padding: 10;");
+
+        VBox contenedor = new VBox(10);
+        contenedor.setStyle("-fx-padding: 15;");
+        contenedor.getChildren().addAll(titulo, requisitos);
+
+        Scene escena = new Scene(contenedor, 600, 300);
+        stage.setTitle("Requisitos de Adopción");
+        stage.setScene(escena);
+        stage.show();
+    }
+}
