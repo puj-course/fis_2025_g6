@@ -1,6 +1,7 @@
 package com.fis_2025_g6.service;
 
 import com.fis_2025_g6.AdoptionStatus;
+import com.fis_2025_g6.dto.PetDto;
 import com.fis_2025_g6.entity.Pet;
 import com.fis_2025_g6.entity.Refuge;
 import com.fis_2025_g6.repository.PetRepository;
@@ -55,4 +56,17 @@ public class PetService {
         }
         return exists;
     }
+
+    public Optional<Pet> update(Long id, PetDto petDto) {
+    return petRepository.findById(id).map(existingPet -> {
+        existingPet.setName(petDto.getName());
+        existingPet.setSpecies(petDto.getSpecies());
+        existingPet.setAge(petDto.getAge());
+        existingPet.setSex(petDto.getSex());
+        existingPet.setDescription(petDto.getDescription());
+        //existingPet.setStatus(petDto.getStatus()); // si quieres actualizar el estado también
+        return petRepository.save(existingPet); // <--- esto retorna un Pet
+    });
+}
+
 }
