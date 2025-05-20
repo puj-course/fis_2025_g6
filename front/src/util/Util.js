@@ -11,7 +11,7 @@ export const translatePetStatus = (status) => {
     }
 };
 
-export const translsateApplicationStatus = (status) => {
+export const translateApplicationStatus = (status) => {
     switch (status) {
         case 'PENDING':
             return 'Disponible';

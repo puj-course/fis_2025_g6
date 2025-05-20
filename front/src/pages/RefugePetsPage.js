@@ -3,7 +3,7 @@ import axios from 'axios';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { translatePetStatus, translsateApplicationStatus } from '../util/Util';
+import { translatePetStatus } from '../util/Util';
 
 export default function RefugePetsPage() {
     const [requests, setRequests] = useState([]);
@@ -34,19 +34,6 @@ export default function RefugePetsPage() {
 
         fetchPets();
     }, []);
-
-    const handleDelete = async (id) => {
-        try {
-            await axios.delete(`http://localhost:8080/mascotas/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            });
-            setPets((prev) => prev.filter((pet) => pet.id !== id));
-        } catch (error) {
-            console.error('Error al eliminar mascota:', error);
-        }
-    };
 
     const handleAddPet = (e) => {
         e.preventDefault();

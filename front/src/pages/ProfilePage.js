@@ -109,8 +109,9 @@ export default function ProfilePage() {
                         {isEditing ? (
                             <form onSubmit={handleUpdate}>
                                 <div className="mb-3">
-                                    <label className="form-label">Nombre de usuario</label>
+                                    <label htmlFor='username' className="form-label">Nombre de usuario</label>
                                     <input
+                                        id='username'
                                         className="form-control"
                                         name="username"
                                         value={formData.username || ''}
@@ -118,8 +119,9 @@ export default function ProfilePage() {
                                     />
                                 </div>
                                 <div className="mb-3">
-                                    <label className="form-label">Correo electrónico</label>
+                                    <label htmlFor='email' className="form-label">Correo electrónico</label>
                                     <input
+                                        id='email'
                                         className="form-control"
                                         name="email"
                                         value={formData.email || ''}
@@ -127,8 +129,9 @@ export default function ProfilePage() {
                                     />
                                 </div>
                                 <div className="mb-3">
-                                    <label className="form-label">Teléfono</label>
+                                    <label htmlFor='phoneNumber' className="form-label">Teléfono</label>
                                     <input
+                                        id='phoneNumber'
                                         className="form-control"
                                         name="phoneNumber"
                                         value={formData.phoneNumber || ''}
@@ -136,8 +139,9 @@ export default function ProfilePage() {
                                     />
                                 </div>
                                 <div className="mb-3">
-                                    <label className="form-label">Dirección</label>
+                                    <label htmlFor='address' className="form-label">Dirección</label>
                                     <input
+                                        id='address'
                                         className="form-control"
                                         name="address"
                                         value={formData.address || ''}
@@ -146,8 +150,9 @@ export default function ProfilePage() {
                                 </div>
                                 {userType === 'ADOPTANT' && (
                                     <div className="mb-3">
-                                        <label className="form-label">Nombre del adoptante</label>
+                                        <label htmlFor='adoptantName' className="form-label">Nombre del adoptante</label>
                                         <input
+                                            id='adoptantName'
                                             className="form-control"
                                             name="adoptantName"
                                             value={formData.adoptantName || ''}
@@ -158,8 +163,9 @@ export default function ProfilePage() {
                                 {userType === 'REFUGE' && (
                                     <>
                                         <div className="mb-3">
-                                            <label className="form-label">Nombre del refugio</label>
+                                            <label htmlFor='refugeName' className="form-label">Nombre del refugio</label>
                                             <input
+                                                id='refugeName'
                                                 className="form-control"
                                                 name="refugeName"
                                                 value={formData.refugeName || ''}
@@ -167,8 +173,9 @@ export default function ProfilePage() {
                                             />
                                         </div>
                                         <div className="mb-3">
-                                            <label className="form-label">Descripción</label>
+                                            <label htmlFor='description' className="form-label">Descripción</label>
                                             <textarea
+                                                id='description'
                                                 className="form-control"
                                                 name="description"
                                                 rows="3"
