@@ -1,31 +1,18 @@
 package com.fis_2025_g6.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
+@Schema(description = "Inicio de sesión de usuario")
 public class AuthRequest {
+    @NotBlank
+    @Schema(description = "Nombre de usuario")
     private String username;
+
+    @NotBlank
+    @Schema(description = "Contraseña")
     private String password;
-    private String type;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String val) {
-        username = val;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String val) {
-        password = val;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String val) {
-        password = val;
-    }
 }

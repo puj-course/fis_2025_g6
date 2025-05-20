@@ -2,11 +2,15 @@ package com.fis_2025_g6.auth;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fis_2025_g6.entity.Administrator;
+import com.fis_2025_g6.entity.Adoptant;
+import com.fis_2025_g6.entity.Refuge;
 import com.fis_2025_g6.entity.User;
 
 public class CustomUserDetails implements UserDetails {
@@ -18,7 +22,17 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        String role;
+        if (user instanceof Adoptant) {
+            role = "ROLE_ADOPTANT";
+        } else if (user instanceof Refuge) {
+            role = "ROLE_REFUGE";
+        } else if (user instanceof Administrator) {
+            role = "ROLE_ADMIN";
+        } else {
+            role = "ROLE_USER";
+        }
+        return List.of(new SimpleGrantedAuthority(role));
     }
 
     @Override
@@ -49,5 +63,21 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Optional<Adoptant> getAsAdoptant() {
+        return user instanceof Adoptant ? Optional.of((Adoptant)user) : Optional.empty();
+    }
+
+    public Optional<Refuge> getAsRefuge() {
+        return user instanceof Refuge ? Optional.of((Refuge)user) : Optional.empty();
+    }
+
+    public Optional<Administrator> getAsAdministrator() {
+        return user instanceof Administrator ? Optional.of((Administrator)user) : Optional.empty();
     }
 }

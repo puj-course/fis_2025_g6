@@ -1,3 +1,6 @@
 .env
 .vscode/
+target/
+src/main/resources/*.properties
+front/node_modules/
 *.log

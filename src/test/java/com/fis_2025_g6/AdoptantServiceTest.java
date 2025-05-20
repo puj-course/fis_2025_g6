@@ -3,8 +3,12 @@ package com.fis_2025_g6;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+
+import java.util.List;
+import java.util.Optional;
 
 import com.fis_2025_g6.entity.Adoptant;
 import com.fis_2025_g6.repository.AdoptantRepository;
@@ -18,7 +22,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class AdoptantServiceTest {
-
     @Mock
     private AdoptantRepository adoptantRepository;
 
@@ -43,7 +46,6 @@ public class AdoptantServiceTest {
         assertEquals("jose", result.getAdoptantName());
     }
 
-    // Prueba negativa: eliminación fallida de un adoptante inexistente
     @Test
     void testDeleteAdoptant_NotFound() {
         Long nonExistentId = 999L;
@@ -54,7 +56,6 @@ public class AdoptantServiceTest {
         assertFalse(deleted, "El método debe devolver false si el ID no existe");
     }
 
-    // Prueba de caso borde: nombre vacío de adoptante
     @Test
     void testCreateAdoptant_EmptyName() {
         Adoptant adoptant = new Adoptant();
@@ -72,5 +73,46 @@ public class AdoptantServiceTest {
         assertNotNull(result);
         assertEquals("", result.getUsername(), "Debe permitir guardar un nombre vacío si no hay validación activa");
     }
-    
+
+    @Test
+    void testFindAllAdoptants() {
+        List<Adoptant> mockList = List.of(new Adoptant(), new Adoptant());
+        when(adoptantRepository.findAll()).thenReturn(mockList);
+
+        List<Adoptant> result = adoptantService.findAll();
+
+        assertNotNull(result);
+        assertEquals(2, result.size(), "Debe devolver 2 adoptantes");
+    }
+
+    @Test
+    void testFindById_Exists() {
+        Adoptant adoptant = new Adoptant();
+        adoptant.setId(1L);
+        when(adoptantRepository.findById(1L)).thenReturn(Optional.of(adoptant));
+
+        Optional<Adoptant> result = adoptantService.findById(1L);
+
+        assertTrue(result.isPresent(), "Debe encontrar el adoptante");
+        assertEquals(1L, result.get().getId());
+    }
+
+    @Test
+    void testFindById_NotFound() {
+        when(adoptantRepository.findById(123L)).thenReturn(Optional.empty());
+
+        Optional<Adoptant> result = adoptantService.findById(123L);
+
+        assertFalse(result.isPresent(), "No debe encontrar el adoptante");
+    }
+
+    @Test
+    void testDeleteAdoptant_Exists() {
+        Long id = 1L;
+        when(adoptantRepository.existsById(id)).thenReturn(true);
+
+        boolean deleted = adoptantService.delete(id);
+
+        assertTrue(deleted, "Debe devolver true si el adoptante existe");
+    }
 }

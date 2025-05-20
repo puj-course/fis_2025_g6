@@ -1,6 +1,8 @@
 package com.fis_2025_g6.entity;
 
-import java.util.Set;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,8 +22,10 @@ public class Refuge extends User {
     private String description;
 
     @OneToMany(mappedBy = "refuge")
-    private Set<Pet> pets;
+    @JsonIgnore
+    private List<Pet> pets;
 
     @OneToMany(mappedBy = "refuge")
-    private Set<Donation> receivedDonations;
+    @JsonIgnore
+    private List<Donation> receivedDonations;
 }

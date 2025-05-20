@@ -24,6 +24,22 @@ public class RefugeService {
         return refugeRepository.findById(id);
     }
 
+    public Optional<Refuge> findByUsername(String userame) {
+        return refugeRepository.findByUsername(userame);
+    }
+
+    public Refuge update(Refuge refuge) {
+        return refugeRepository.save(refuge);
+    }
+
+    public boolean existsByUsernameAndIdNot(String username, Long id) {
+        return refugeRepository.existsByUsernameAndIdNot(username, id);
+    }
+
+    public boolean existsByEmailAndIdNot(String email, Long id) {
+        return refugeRepository.existsByEmailAndIdNot(email, id);
+    }
+
     public Refuge create(Refuge refuge) {
         return refugeRepository.save(refuge);
     }
