@@ -4,7 +4,6 @@ import java.net.URI;
 import java.sql.Date;
 import java.util.List;
 
-import com.fis_2025_g6.dto.PetCatalogDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -94,7 +93,6 @@ public class PetController {
         pet.setRegistrationDate(new Date(System.currentTimeMillis()));
         pet.setStatus(AdoptionStatus.AVAILABLE);
         pet.setRefuge((Refuge)user);
-        pet.setPhotoUrl(dto.getPhotoUrl());
         Pet created = petService.create(pet);
         return ResponseEntity.created(URI.create("/mascotas/" + created.getId())).body(created);
     }
@@ -105,16 +103,5 @@ public class PetController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         boolean deleted = petService.delete(id);
         return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
-    }
-
-    @GetMapping("/catalogo")
-    public List<PetCatalogDto> getAvailablePetsForCatalog() {
-        return petService.findAll().stream()
-                .filter(pet -> pet.getStatus() == AdoptionStatus.AVAILABLE)
-                .map(pet -> new PetCatalogDto(
-                        pet.getNombre(),      // Nombre (String)
-                        pet.getPhotoUrl()     // URL de la foto (String)
-                ))
-                .toList();
     }
 }

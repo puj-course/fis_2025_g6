@@ -43,9 +43,6 @@ public class Pet implements Serializable {
     @Column(name = "masc_estado", nullable = false)
     private AdoptionStatus status = AdoptionStatus.AVAILABLE;
 
-    @Column(name = "masc_fotoUrl")
-    private String photoUrl;
-
     @ManyToOne
     @JoinColumn(name = "refg_id", nullable = false)
     private Refuge refuge;
