@@ -27,6 +27,7 @@ public class PantallaRequisitosAdopcionFX extends Application {
                 "6. Firmar el contrato de adopción.\n" +
                 "7. En algunos casos, pagar una cuota de adopción simbólica."
         );
+
         requisitos.setEditable(false);
         requisitos.setWrapText(true);
         requisitos.setPrefHeight(180);
