@@ -43,7 +43,6 @@ public class EmailControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(emailController).build();
     }
 
-    
 
     @Test
     void testSendEmailToUser_Found() throws Exception {
