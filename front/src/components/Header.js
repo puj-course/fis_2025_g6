@@ -4,9 +4,11 @@ import { Link, useNavigate } from 'react-router-dom';
 export default function Header() {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
+    const userType = localStorage.getItem('userType');
 
     const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('userType');
         navigate('/iniciosesion');
     };
 
@@ -21,15 +23,29 @@ export default function Header() {
                     <ul className="navbar-nav ms-auto">
                         {token ? (
                             <>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/lista-refugios">Lista de refugios</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/lista-mascotas">Lista de mascotas</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/solicitudes">Mis solicitudes</Link>
-                                </li>
+                                {userType === 'ADOPTANT' && (
+                                    <>
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to="/lista-refugios">Lista de refugios</Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to="/lista-mascotas">Lista de mascotas</Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to="/solicitudes">Mis solicitudes</Link>
+                                        </li>
+                                    </>
+                                )}
+                                {userType === 'REFUGE' && (
+                                    <>
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to="/donaciones">Donaciones</Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to="/mascotas">Mis mascotas</Link>
+                                        </li>
+                                    </>
+                                )}
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/perfil">Perfil</Link>
                                 </li>

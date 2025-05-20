@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { translateApplicationStatus } from '../util/Util';
 
 const ApplicationListPage = () => {
     const [applications, setApplications] = useState([]);
@@ -39,19 +40,6 @@ const ApplicationListPage = () => {
         fetchMyApplications();
     }, []);
 
-    const translateStatus = (status) => {
-        switch (status) {
-            case 'PENDING':
-                return 'Pendiente';
-            case 'ACCEPTED':
-                return 'Aceptada';
-            case 'REJECTED':
-                return 'Rechazada';
-            default:
-                return status;
-        }
-    };
-
     return (
         <>
             <Header />
@@ -67,7 +55,7 @@ const ApplicationListPage = () => {
                                     <div className="card-body">
                                         <h5 className="card-title">Solicitud #{app.id}</h5>
                                         <p><strong>Fecha:</strong> {new Date(app.date).toLocaleDateString()}</p>
-                                        <p><strong>Estado:</strong> {translateStatus(app.status)}</p>
+                                        <p><strong>Estado:</strong> {translateApplicationStatus(app.status)}</p>
                                         {app.pet && (
                                             <p><strong>Mascota:</strong> {app.pet.name} ({app.pet.species})</p>
                                         )}
