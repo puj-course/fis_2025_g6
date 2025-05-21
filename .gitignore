@@ -1,6 +1,7 @@
 .env
 .vscode/
 target/
-src/main/resources/*.properties
+src/main/resources/application.properties
+src/main/resources/application-docker.properties
 front/node_modules/
 *.log
