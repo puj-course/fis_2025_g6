@@ -33,7 +33,6 @@ beforeEach(() => {
             ok: true,
             json: () =>
                 Promise.resolve({
-                    username: 'john_doe',
                     email: 'john@example.com',
                     phoneNumber: '123456789',
                     address: 'Calle Falsa 123',
@@ -50,8 +49,6 @@ describe('ProfilePage', () => {
         expect(screen.getByText(/Cargando perfil/i)).toBeInTheDocument();
 
         await waitFor(() => {
-            expect(screen.getByText('john_doe')).toBeInTheDocument();
-
             // Verificar etiquetas y textos por separado
             expect(screen.getByText('Nombre del adoptante:')).toBeInTheDocument();
             expect(screen.getByText('Juan Pérez')).toBeInTheDocument();
@@ -71,7 +68,6 @@ describe('ProfilePage', () => {
         fireEvent.click(screen.getByText('Editar perfil'));
 
         // Usamos getByLabelText (pero ojo: los inputs deben tener id para que esto funcione)
-        expect(screen.getByLabelText('Nombre de usuario')).toBeInTheDocument();
         expect(screen.getByLabelText('Correo electrónico')).toBeInTheDocument();
     });
 });

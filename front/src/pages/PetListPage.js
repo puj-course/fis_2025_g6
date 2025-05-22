@@ -124,6 +124,7 @@ const PetListPage = () => {
                 }
             );
 
+            alert('SMS enviado')
             console.log(res.data);
         } catch (error) {
             console.error('Error al enviar notificación', error);
@@ -138,7 +139,7 @@ const PetListPage = () => {
 
     const hasActiveApplication = (petId) => {
         return userApplications.some(app =>
-            app.pet.id === petId && (app.status === 'PENDING' || app.status === 'ACCEPTED')
+            app.pet.id === petId && (app.status === 'PENDING' || app.status === 'APPROVED')
         );
     };
     const handleInputChange = (e) => {
@@ -200,6 +201,7 @@ Teléfono: ${adoptant.phoneNumber}
 Dirección: ${adoptant.address}
         `.trim();
 
+        alert('Correo enviado')
         await notifyEmail(subject, message);
     };
 

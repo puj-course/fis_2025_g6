@@ -14,11 +14,11 @@ export const translatePetStatus = (status) => {
 export const translateApplicationStatus = (status) => {
     switch (status) {
         case 'PENDING':
-            return 'Disponible';
+            return 'Pendiente';
         case 'APPROVED':
-            return 'En proceso';
+            return 'Aprobado';
         case 'REJECTED':
-            return 'Adoptado';
+            return 'Rechazado';
         case 'CANCELED':
             return 'Cancelado';
         default:
