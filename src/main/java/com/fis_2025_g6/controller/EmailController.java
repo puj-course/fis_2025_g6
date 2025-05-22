@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
 
 import java.util.Optional;
 
@@ -27,31 +26,21 @@ public class EmailController {
     @Operation(summary = "Enviarse correo", description = "Usuarios ADOPTANTE o REFUGIO")
     @PostMapping("/me")
     public ResponseEntity<String> sendMeEmail(
-        @RequestParam String subject,
-        @RequestParam String message,
-        @AuthenticationPrincipal CustomUserDetails principal
-    ) {
-        System.out.println("Principal: " + principal);
-    if (principal == null) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No autenticado");
-    }
-    User destination = principal.getUser();
-    System.out.println("Destination user: " + destination);
-    if (destination == null) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Usuario no encontrado en principal");
-    }
-    emailService.sendEmail(destination.getEmail(), subject, message);
-    return ResponseEntity.ok("Correo enviado a " + destination.getUsername());
+            @RequestParam String subject,
+            @RequestParam String message,
+            @AuthenticationPrincipal CustomUserDetails principal) {
+        User destination = principal.getUser();
+        emailService.sendEmail(destination.getEmail(), subject, message);
+        return ResponseEntity.ok("Correo enviado a " + destination.getUsername());
     }
 
     @Operation(summary = "Enviar correo a un usuario", description = "Usuarios REFUGIO")
     @PreAuthorize("hasRole('REFUGE') or hasRole('ADMIN')")
     @PostMapping("/{id}/envio")
     public ResponseEntity<String> sendEmailToUser(
-        @PathVariable Long id,
-        @RequestParam String subject,
-        @RequestParam String message
-    ) {
+            @PathVariable Long id,
+            @RequestParam String subject,
+            @RequestParam String message) {
         Optional<User> user = userService.findById(id);
         if (user.isEmpty()) {
             return ResponseEntity.notFound().build();

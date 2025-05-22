@@ -3,7 +3,7 @@ import axios from 'axios';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { translatePetStatus } from '../util/Util';
+import { translateApplicationStatus, translatePetStatus } from '../util/Util';
 
 export default function RefugePetsPage() {
     const [requests, setRequests] = useState([]);
@@ -68,6 +68,7 @@ export default function RefugePetsPage() {
             setRequests(prev => prev.map(r => r.id === requestId ? { ...r, status: newStatus } : r));
         }).catch(console.error);
     };
+
     return (
         <>
             <Header />
@@ -167,16 +168,33 @@ export default function RefugePetsPage() {
                     {requests.length === 0 ? (
                         <p>No hay solicitudes.</p>
                     ) : (
-                        requests.map((req) => (
-                            <div key={req.id} className="mb-3 border rounded p-2">
-                                <p><strong>Fecha: </strong>{req.date}</p>
-                                <p><strong>Adoptante: </strong>{req.adoptant.adoptantName} ({req.adoptant.email})</p>
-                                <div className="d-flex gap-2">
-                                    <button className="btn btn-success" onClick={() => updateRequestStatus(req.id, 'APPROVED')}>Aprobar</button>
-                                    <button className="btn btn-danger" onClick={() => updateRequestStatus(req.id, 'REJECTED')}>Rechazar</button>
+                        requests.map((req) => {
+                            const isFinalStatus = req.status === 'APPROVED' || req.status === 'REJECTED';
+                            return (
+                                <div key={req.id} className="mb-3 border rounded p-2">
+                                    <p><strong>ID: </strong>{req.id}</p>
+                                    <p><strong>Fecha: </strong>{req.date}</p>
+                                    <p><strong>Adoptante: </strong>{req.adoptant.adoptantName} ({req.adoptant.email})</p>
+                                    <p><strong>Estado de la solicitud: </strong>{translateApplicationStatus(req.status)}</p>
+                                    <div className="d-flex gap-2">
+                                        <button
+                                            className="btn btn-success"
+                                            onClick={() => updateRequestStatus(req.id, 'APPROVED')}
+                                            disabled={isFinalStatus}
+                                        >
+                                            Aprobar
+                                        </button>
+                                        <button
+                                            className="btn btn-danger"
+                                            onClick={() => updateRequestStatus(req.id, 'REJECTED')}
+                                            disabled={isFinalStatus}
+                                        >
+                                            Rechazar
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        ))
+                            );
+                        })
                     )}
                 </Modal.Body>
             </Modal>
