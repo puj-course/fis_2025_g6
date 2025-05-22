@@ -9,6 +9,7 @@ export default function ProfilePage() {
     const [error, setError] = useState('');
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({});
+    const [validationErrors, setValidationErrors] = useState({});
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -47,6 +48,40 @@ export default function ProfilePage() {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const newValidationErrors = {};
+
+        const phoneRegex = /^\+?[\d\s\-()]{7,20}$/;
+
+        if (formData.email && !emailRegex.test(formData.email)) {
+            newValidationErrors.email = 'Correo electrónico no válido.';
+        }
+        if (formData.phoneNumber && !phoneRegex.test(formData.phoneNumber)) {
+            newValidationErrors.phoneNumber = 'Número no válido. Usa solo dígitos, espacios, paréntesis o guiones (7-20 caracteres).';
+        }
+
+        if (formData.address && formData.address.length > 60) {
+            newValidationErrors.address = 'Máximo 60 caracteres.';
+        }
+
+        if (userType === 'ADOPTANT' && formData.adoptantName && (formData.adoptantName.length > 30 || formData.adoptantName.length < 4)) {
+            newValidationErrors.adoptantName = 'El nombre debe tener entre 4 y 30 caracteres.';
+        }
+
+        if (userType === 'REFUGE') {
+            if (formData.refugeName && (formData.refugeName.length > 30 || formData.refugeName.length < 4)) {
+                newValidationErrors.refugeName = 'El nombre debe tener entre 4 y 30 caracteres.';
+            }
+        }
+
+        if (Object.keys(newValidationErrors).length > 0) {
+            setValidationErrors(newValidationErrors);
+            return;
+        }
+
+        setValidationErrors({});
+
         try {
             const token = localStorage.getItem('token');
             if (!token || !userType) {
@@ -109,68 +144,67 @@ export default function ProfilePage() {
                         {isEditing ? (
                             <form onSubmit={handleUpdate}>
                                 <div className="mb-3">
-                                    <label htmlFor='username' className="form-label">Nombre de usuario</label>
-                                    <input
-                                        id='username'
-                                        className="form-control"
-                                        name="username"
-                                        value={formData.username || ''}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className="mb-3">
                                     <label htmlFor='email' className="form-label">Correo electrónico</label>
                                     <input
                                         id='email'
-                                        className="form-control"
+                                        type="email"
+                                        className={`form-control ${validationErrors.email ? 'is-invalid' : ''}`}
                                         name="email"
                                         value={formData.email || ''}
                                         onChange={handleChange}
                                     />
+                                    {validationErrors.email && <div className="invalid-feedback">{validationErrors.email}</div>}
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor='phoneNumber' className="form-label">Teléfono</label>
                                     <input
                                         id='phoneNumber'
-                                        className="form-control"
+                                        className={`form-control ${validationErrors.phoneNumber ? 'is-invalid' : ''}`}
                                         name="phoneNumber"
                                         value={formData.phoneNumber || ''}
                                         onChange={handleChange}
                                     />
+                                    {validationErrors.phoneNumber && <div className="invalid-feedback">{validationErrors.phoneNumber}</div>}
                                 </div>
+
                                 <div className="mb-3">
                                     <label htmlFor='address' className="form-label">Dirección</label>
                                     <input
                                         id='address'
-                                        className="form-control"
+                                        className={`form-control ${validationErrors.address ? 'is-invalid' : ''}`}
                                         name="address"
                                         value={formData.address || ''}
                                         onChange={handleChange}
                                     />
+                                    {validationErrors.address && <div className="invalid-feedback">{validationErrors.address}</div>}
                                 </div>
+
                                 {userType === 'ADOPTANT' && (
                                     <div className="mb-3">
                                         <label htmlFor='adoptantName' className="form-label">Nombre del adoptante</label>
                                         <input
                                             id='adoptantName'
-                                            className="form-control"
+                                            className={`form-control ${validationErrors.adoptantName ? 'is-invalid' : ''}`}
                                             name="adoptantName"
                                             value={formData.adoptantName || ''}
                                             onChange={handleChange}
                                         />
+                                        {validationErrors.adoptantName && <div className="invalid-feedback">{validationErrors.adoptantName}</div>}
                                     </div>
                                 )}
+
                                 {userType === 'REFUGE' && (
                                     <>
                                         <div className="mb-3">
                                             <label htmlFor='refugeName' className="form-label">Nombre del refugio</label>
                                             <input
                                                 id='refugeName'
-                                                className="form-control"
+                                                className={`form-control ${validationErrors.refugeName ? 'is-invalid' : ''}`}
                                                 name="refugeName"
                                                 value={formData.refugeName || ''}
                                                 onChange={handleChange}
                                             />
+                                            {validationErrors.refugeName && <div className="invalid-feedback">{validationErrors.refugeName}</div>}
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor='description' className="form-label">Descripción</label>
